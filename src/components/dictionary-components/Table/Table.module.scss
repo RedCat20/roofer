@@ -1,0 +1,16 @@
+h1 {
+	font-size: 20px;
+	margin-bottom: 12px;
+	color: #61626b;
+}
+
+table {
+	background: #ffffff;
+}
+
+.addImg {
+	width: 40px;
+	&:hover {
+		cursor: pointer;
+	}
+}

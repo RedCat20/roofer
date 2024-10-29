@@ -1,0 +1,54 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	overflow: auto;
+	@media screen and (max-width: 799px) {
+		align-items: flex-start;
+	}
+}
+
+.infoBlock {
+	font-size: 14px;
+	line-height: 18px;
+	margin: 15px 0;
+
+	padding: 10px 20px 10px 20px;
+	@media screen and (max-width: 1499px) {
+		padding: 10px 15px 10px 15px;
+	}
+}
+
+.figureButtons {
+	display: grid;
+	grid-template-columns: 50% 50%;
+	grid-column-gap: 10px;
+	grid-row-gap: 15px;
+}
+
+.figureButton {
+	width: 75px;
+	height: 55px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	div {
+		margin-right: 10px;
+	}
+	border: 1px solid gray;
+	background: transparent;
+	border-radius: 5px;
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.activeFigure {
+	border: 3px solid lightgreen;
+}
+
+.img {
+	max-width: 50px;
+	max-height: 50px;
+}

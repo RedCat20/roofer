@@ -1,0 +1,91 @@
+.stageContainer {
+	display: flex;
+	flex-direction: column;
+	// justify-content: center;
+	// align-items: center;
+	// overflow: auto;
+	margin-bottom: 15px;
+
+	@media screen and (max-width: 1699px) {
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+
+	option {
+		font-size: 15px;
+	}
+}
+
+.gridWrapper {
+	// max-width: calc(100vw - 40px);
+	// margin: 0 auto;
+	// overflow: auto;
+	padding: 10px;
+	//width: 100%;
+	background: #ffffff;
+	border-radius: 5px;
+	box-shadow: 0 0 10px 3px rgba(221, 221, 221, 0.5);
+}
+
+.buttons {
+	display: flex;
+	flex-wrap: wrap;
+	button[disabled] {
+		cursor: initial;
+	}
+	button {
+		background: #cccccc;
+		margin-right: 5px;
+		box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+			rgb(209, 213, 219) 0px 0px 0px 1px inset;
+		border: 1px solid silver;
+
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+
+		height: 38px;
+		padding-left: 10px;
+		padding-right: 10px;
+
+		&:hover {
+			cursor: pointer;
+		}
+		&.admin-btn {
+			margin-right: 0;
+			background: #93d629;
+			color: white;
+		}
+	}
+	button[disabled] {
+		background-color: white;
+		border: none;
+		color: silver;
+	}
+}
+
+.messageWrapper {
+	align-self: center;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-size: 12px;
+	line-height: 1.2;
+}
+
+.editBtnWrapper {
+	padding: 0 0 0 0;
+	margin-bottom: 10px;
+	display: grid;
+	grid-template-columns: 200px 1fr auto;
+	// display: flex;
+	// justify-content: space-between;
+	width: 100%;
+}
+
+.calc-result {
+	width: 100%;
+	border-top: 5px solid #cccccc;
+
+	display: flex;
+	justify-content: flex-start;
+	text-align: left;
+}
