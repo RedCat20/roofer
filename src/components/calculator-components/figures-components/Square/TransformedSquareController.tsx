@@ -6,6 +6,7 @@ import { ICoords } from '../../../../interfaces/coords'
 import TransformedSquare from './TransformedSquare'
 import { scalesConfig } from '../../../../data'
 import { AppContext } from '../../../../context/AppContext'
+import { useSelector, useDispatch } from 'react-redux'
 
 interface Props {
 	figureWidth: number
@@ -30,6 +31,7 @@ const TransformedSquareController: FC<Props> = ({
 }) => {
 	const appContext = useContext(AppContext)
 	let figureBottomLine = Math.floor(gridHeight / cellSize) * cellSize
+	const { selectedScale } = useSelector((state: any) => state.settings)
 
 	let selectShapeHandler = (id: any) => {
 		setSelectedCallback(id)
@@ -51,9 +53,7 @@ const TransformedSquareController: FC<Props> = ({
 		setRectangles([
 			{
 				x: startCoords.x,
-				y:
-					-gridHeight / scalesConfig[`${appContext.state.selectedScale}`] +
-					cellSize,
+				y: -gridHeight / scalesConfig[`${selectedScale}`] + cellSize,
 				width: figureWidth * cellSize,
 				height: figureHeight * cellSize,
 				fill: 'rgba(139, 69, 19, 0.3)',
@@ -61,7 +61,7 @@ const TransformedSquareController: FC<Props> = ({
 				id: 'rectangle2',
 			},
 		])
-	}, [appContext.state.selectedScale])
+	}, [selectedScale])
 
 	const [rectangles, setRectangles] = React.useState(currentFigure)
 

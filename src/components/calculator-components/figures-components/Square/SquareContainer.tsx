@@ -12,13 +12,11 @@ interface Props {
 	setSelectedRectangleIdCallback: (id: any) => void
 	// setNewSidesCallback: (points: any) => void
 	selectedSquareId: any
-	changeStartPointsCallback: (points: any[]) => void
 	setCalcResult: any
 }
 
 const SquareContainer: FC<Props> = ({
 	setSelectedRectangleIdCallback,
-	changeStartPointsCallback,
 	// setNewSidesCallback,
 	selectedSquareId,
 	setCalcResult,

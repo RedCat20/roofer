@@ -11,7 +11,6 @@ type gridParamsOptions = {
 }
 
 interface IGridParams {
-	// size: gridParamsOptions;
 	size1: gridParamsOptions
 	size2: gridParamsOptions
 	size3: gridParamsOptions

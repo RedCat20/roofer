@@ -5,6 +5,7 @@ import React, { FC, useContext } from 'react'
 import { Layer, Line, Rect } from 'react-konva'
 import { AppContext } from '../../../../context/AppContext'
 import { scalesConfig } from '../../../../data'
+import { useSelector, useDispatch } from 'react-redux'
 
 interface Props {
 	width: number
@@ -27,10 +28,11 @@ const CoveredSquare: FC<Props> = ({
 	startCoords,
 }) => {
 	const appContext = useContext(AppContext)
+	const { selectedScale } = useSelector((state: any) => state.settings)
 
 	function createCellRows() {
 		let figureBottomLine =
-			-gridHeight / scalesConfig[`${appContext.state.selectedScale}`] +
+			-gridHeight / scalesConfig[`${selectedScale}`] +
 			cellSize +
 			height * cellSize
 
@@ -236,10 +238,7 @@ const CoveredSquare: FC<Props> = ({
 			<Layer>
 				<Rect
 					x={startCoords.x}
-					y={
-						-gridHeight / scalesConfig[`${appContext.state.selectedScale}`] +
-						cellSize
-					}
+					y={-gridHeight / scalesConfig[`${selectedScale}`] + cellSize}
 					width={width * cellSize}
 					height={height * cellSize}
 					fill='gold'

@@ -8,22 +8,24 @@ import RemoveImg from '../../../../images/remove.png'
 import { AppContext } from '../../../../context/AppContext'
 import { gridParams } from '../../../../data'
 import { IGridConfig } from '../../../../interfaces/grid-config-interface'
+import { setSelectedScale } from '../../../../store/settingSlice'
+import { useSelector, useDispatch } from 'react-redux'
 
 const MainActions: FC = () => {
 	const appContext = useContext(AppContext)
+	const dispatch = useDispatch()
+	const { selectedScale } = useSelector((state: any) => state.settings)
 
 	function zoomInBtnHandler(e: any) {
-		if (appContext.state.selectedScale <= 1) {
+		if (selectedScale <= 1) {
 			return
 		}
 
 		const width = window.innerWidth
 		let defaultGridConfig: IGridConfig | null = null
-		let createdScale = `scale${appContext.state.selectedScale - 1}`
-		appContext.dispatch({
-			type: 'set-selected-scale',
-			payload: { selectedScale: appContext.state.selectedScale - 1 },
-		})
+		let createdScale = `scale${selectedScale - 1}`
+
+		dispatch(setSelectedScale(selectedScale - 1))
 
 		if (width >= 1920) {
 			defaultGridConfig = gridParams.size1[createdScale]
@@ -44,17 +46,15 @@ const MainActions: FC = () => {
 	function zoomOutBtnHandler(e: any) {
 		const width = window.innerWidth
 
-		if (appContext.state.selectedScale >= 3) {
+		if (selectedScale >= 3) {
 			return
 		}
 
 		let defaultGridConfig: IGridConfig | null = null
 
-		let createdScale = `scale${appContext.state.selectedScale + 1}`
-		appContext.dispatch({
-			type: 'set-selected-scale',
-			payload: { selectedScale: appContext.state.selectedScale + 1 },
-		})
+		let createdScale = `scale${selectedScale + 1}`
+
+		dispatch(setSelectedScale(selectedScale + 1))
 
 		if (width >= 1920) {
 			defaultGridConfig = gridParams.size1[createdScale]
@@ -73,7 +73,7 @@ const MainActions: FC = () => {
 	}
 
 	function removeActionsBtnHandler(e: any) {
-		appContext.dispatch({ type: 'remove-all' })
+		// appContext.dispatch({ type: 'remove-all' })
 	}
 
 	return (

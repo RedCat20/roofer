@@ -4,6 +4,7 @@ import React, { FC, useContext, useEffect, useState } from 'react'
 import { Circle, Layer, Line } from 'react-konva'
 import { scalesConfig } from '../../../../data'
 import { AppContext } from '../../../../context/AppContext'
+import { useSelector, useDispatch } from 'react-redux'
 
 interface Props {
 	coords: any[]
@@ -21,6 +22,7 @@ const EditedPointedPolygon: FC<Props> = ({
 	const [points, setPoints] = useState<any[]>([])
 	const [builtCustomPoints, setBuiltCustomPoints] = useState([])
 	const appContext = useContext(AppContext)
+	const { selectedScale } = useSelector((state: any) => state.settings)
 
 	const [lines, setLines] = useState<number[]>([])
 
@@ -39,15 +41,8 @@ const EditedPointedPolygon: FC<Props> = ({
 	useEffect(() => {
 		if (scaledCoords?.length !== 3) return
 
-		// let figureBottomLine = -gridHeight / scalesConfig[`${appContext.state.selectedScale}`] + cellSize;
-
-		// let figureBottomLine = -gridHeight / scalesConfig[`${appContext.state.selectedScale}`] + cellSize;
-		//let figureBottomLine = -gridHeight * (scalesConfig[`${appContext.state.selectedScale}`]) + cellSize;
-
-		// alert(scalesConfig[`${appContext.state.selectedScale}`])
-
 		let figureBottomLine =
-			-gridHeight / scalesConfig[`${appContext.state.selectedScale}`] + cellSize
+			-gridHeight / scalesConfig[`${selectedScale}`] + cellSize
 		// let figureBottomLine = -gridHeight + cellSize;
 
 		// console.log('figureBottomLine: ', figureBottomLine)
@@ -79,11 +74,10 @@ const EditedPointedPolygon: FC<Props> = ({
 			// {x: coords[1].x, y: coords[1].y},
 			//{x: coords[1].x, y: coords[1].y + figureBottomLine - coords[1].y},
 			{ x: scaledCoords[1].x, y: scaledCoords[1].y - i },
-			// {x: coords[2].x, y: figureBottomLine -coords[2].y * scalesConfig[`${appContext.state.selectedScale}`]},
 			// {x: coords[2].x, y: figureBottomLine - coords[2].y},
 			{ x: scaledCoords[2].x, y: scaledCoords[2].y - i },
 		])
-	}, [appContext.state.selectedScale])
+	}, [selectedScale])
 
 	useEffect(() => {
 		setScaledCoords(coords)

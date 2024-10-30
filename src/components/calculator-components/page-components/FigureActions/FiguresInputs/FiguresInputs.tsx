@@ -50,7 +50,7 @@ export const FiguresInputs: FC<Props> = ({}) => {
 
 	return (
 		<div className={styles.container}>
-			<div className={styles.fields}>
+			<div className={styles.label}>
 				<span>A:</span>
 				<input
 					className={styles.input}
@@ -65,10 +65,10 @@ export const FiguresInputs: FC<Props> = ({}) => {
 					}
 					onChange={onChangeFigureASideHandler.bind(this)}
 				/>
-				<span>м</span>
+				<span>m</span>
 			</div>
 
-			<div className={styles.fields}>
+			<div className={styles.label}>
 				<span>B:</span>
 				<input
 					className={styles.input}
@@ -79,14 +79,14 @@ export const FiguresInputs: FC<Props> = ({}) => {
 					disabled={
 						editedMode > 1 ||
 						selectedFigure === FIGURES.None ||
-						selectedFigure === FIGURES.Square || 
-						selectedFigure === FIGURES.Polygon 
+						selectedFigure === FIGURES.Square ||
+						selectedFigure === FIGURES.Polygon
 					}
 				/>
-				<span>м</span>
+				<span>m</span>
 			</div>
 
-			<div className={styles.fields}>
+			<div className={styles.label}>
 				<span>C:</span>
 				<input
 					className={styles.input}
@@ -102,10 +102,10 @@ export const FiguresInputs: FC<Props> = ({}) => {
 						selectedFigure == FIGURES.Polygon
 					}
 				/>
-				<span>м</span>
+				<span>m</span>
 			</div>
 
-			<div className={styles.fields}>
+			<div className={styles.label}>
 				<span>D:</span>
 				<input
 					className={styles.input}
@@ -123,7 +123,7 @@ export const FiguresInputs: FC<Props> = ({}) => {
 						appContext.state.selectedFigure === FIGURES.Polygon
 					}
 				/>
-				<span>м</span>
+				<span>m</span>
 			</div>
 		</div>
 	)

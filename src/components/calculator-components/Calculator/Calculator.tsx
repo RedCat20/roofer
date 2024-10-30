@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import {
@@ -19,12 +19,6 @@ const Calculator: FC = () => {
 	const dispatch = useDispatch()
 	const { selectedFigure } = useSelector((state: any) => state.settings)
 	const { dictionaries } = useSelector((state: any) => state.dictionaries)
-
-	const [isEditedMode, setIsEditedMode] = React.useState(false)
-
-	const setIsEditedModeCallback = (isEditedMode: any) => {
-		setIsEditedMode(isEditedMode)
-	}
 
 	useEffect(() => {
 		dispatch(setEditedMode(0))
@@ -95,45 +89,6 @@ const Calculator: FC = () => {
 			dispatch(setIsBuildMode(false))
 		}
 	}, [selectedFigure])
-
-	// case FIGURES.Trapezoid: {
-	// 				appContext.dispatch({
-	// 					type: 'change-figure-sides',
-	// 					payload: {
-	// 						figureASide: Number(10),
-	// 						figureBSide: Number(3),
-
-	// 						figureCSide: Number(6),
-	// 						//figureDSide: Number(5),
-	// 						figureDSide: Number(0),
-
-	// 						//figureDSide: 'auto',
-
-	// 						//figureCSide: Number(5),
-	// 						//figureDSide: Number(8),
-
-	// 						// figureASide: Number(10),
-	// 						// figureBSide: Number(3),
-	// 						// figureCSide: Number(6),
-	// 						// figureDSide: Number(8),
-	// 					},
-	// 				})
-	// 				break
-	// 			}
-	// case FIGURES.Triangular: {
-	// 	appContext.dispatch({
-	// 		type: 'change-figure-sides',
-	// 		payload: {
-	// 			figureASide: Number(10),
-	// 			//figureBSide: Number(6.6555),
-	// 			figureBSide: Number(6),
-	// 			//figureCSide: Number(6.6555),
-	// 			figureCSide: Number(6),
-	// 			figureDSide: Number(0),
-	// 		},
-	// 	})
-	// 	break
-	// }
 
 	return (
 		<div className={styles.calculatorContainer}>

@@ -10,13 +10,11 @@ interface Props {
 	setSelectedRectangleIdCallback: (id: any) => void
 	setNewSidesCallback: (points: any) => void
 	selectedRectangleId: any
-	changeStartPointsCallback: (points: any[]) => void
 	setCalcResult: any
 }
 
 const RectangleContainer: FC<Props> = ({
 	setSelectedRectangleIdCallback,
-	changeStartPointsCallback,
 	setNewSidesCallback,
 	selectedRectangleId,
 	setCalcResult,

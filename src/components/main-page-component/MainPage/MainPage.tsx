@@ -8,7 +8,6 @@ const MainPage: FC = () => {
 
 			<div className={styles.article}>
 				<h2>1) Інструкція по користуванню калькулятором:</h2>
-				<br />
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
 					officia veniam ea corrupti, accusantium enim sit soluta doloribus,
@@ -20,7 +19,6 @@ const MainPage: FC = () => {
 				</p>
 				<br />
 				<h2>2) Інструкція по користуванню калькулятором:</h2>
-				<br />
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
 					officia veniam ea corrupti, accusantium enim sit soluta doloribus,
@@ -32,7 +30,6 @@ const MainPage: FC = () => {
 				</p>
 				<br />
 				<h2>3) Інструкція по користуванню калькулятором:</h2>
-				<br />
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
 					officia veniam ea corrupti, accusantium enim sit soluta doloribus,
@@ -44,7 +41,6 @@ const MainPage: FC = () => {
 				</p>
 				<br />
 				<h2>4) Інструкція по користуванню калькулятором:</h2>
-				<br />
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
 					officia veniam ea corrupti, accusantium enim sit soluta doloribus,
@@ -56,7 +52,6 @@ const MainPage: FC = () => {
 				</p>
 				<br />
 				<h2>5) Інструкція по користуванню калькулятором:</h2>
-				<br />
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
 					officia veniam ea corrupti, accusantium enim sit soluta doloribus,
@@ -68,7 +63,6 @@ const MainPage: FC = () => {
 				</p>
 				<br />
 				<h2>6) Інструкція по користуванню калькулятором:</h2>
-				<br />
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
 					officia veniam ea corrupti, accusantium enim sit soluta doloribus,

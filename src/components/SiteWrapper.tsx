@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 
 import { RootState } from '../store'
 import { useGetDictionariesQuery } from '../store/api/dictionary'
+import { useWindowSize } from '../hooks/useWindowSize'
 
 import Routers from './Routers'
 import styles from './SiteWrapper.module.scss'
@@ -13,23 +14,30 @@ import { Footer } from './layout/Footer/Footer'
 
 const SiteWrapper: FC = () => {
 	const { data: dictionaries, error, isLoading } = useGetDictionariesQuery('')
+	const [width, height] = useWindowSize()
+
 	const state = useSelector((state: RootState) => {
 		return state
 	})
+
 	return (
 		<div className={styles.container}>
 			<Header />
-			{isLoading ? (
-				<>Loading...</>
-			) : (
-				<div className={styles.content}>
-					{!error ? (
-						<Routers defaultDictionaries={dictionaries} />
-					) : (
-						<DataError />
-					)}
-				</div>
-			)}
+			<div className={styles.content}>
+				{isLoading ? (
+					<div className={styles.loading}>Loading...</div>
+				) : (
+					<div className={styles.content}>
+						{width < 900 ? (
+							<DataError errorText='Потрібен прилад з більшою шириною' />
+						) : !error ? (
+							<Routers defaultDictionaries={dictionaries} />
+						) : (
+							<DataError />
+						)}
+					</div>
+				)}
+			</div>
 			<Footer />
 		</div>
 	)

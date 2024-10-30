@@ -4,6 +4,7 @@ import React, { FC, useContext, useEffect, useState } from 'react'
 import { Circle, Layer, Line } from 'react-konva'
 import { scalesConfig } from '../../../../data'
 import { AppContext } from '../../../../context/AppContext'
+import { useSelector, useDispatch } from 'react-redux'
 
 interface Props {
 	coords: any[]
@@ -21,6 +22,7 @@ const EditedPointedPolygon: FC<Props> = ({
 	const [points, setPoints] = useState<any[]>([])
 	const [builtCustomPoints, setBuiltCustomPoints] = useState([])
 	const appContext = useContext(AppContext)
+	const { selectedScale } = useSelector((state: any) => state.settings)
 
 	const [lines, setLines] = useState<number[]>([])
 
@@ -40,7 +42,7 @@ const EditedPointedPolygon: FC<Props> = ({
 		if (scaledCoords?.length !== 4) return
 
 		let figureBottomLine =
-			-gridHeight / scalesConfig[`${appContext.state.selectedScale}`] + cellSize
+			-gridHeight / scalesConfig[`${selectedScale}`] + cellSize
 
 		const result = scaledCoords.reduce((a, b) => {
 			return a.y < b.y ? a : b
@@ -54,7 +56,7 @@ const EditedPointedPolygon: FC<Props> = ({
 			{ x: scaledCoords[2].x, y: scaledCoords[2].y - i },
 			{ x: scaledCoords[3].x, y: scaledCoords[3].y - i },
 		])
-	}, [appContext.state.selectedScale])
+	}, [selectedScale])
 
 	useEffect(() => {
 		setScaledCoords(coords)

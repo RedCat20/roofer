@@ -135,7 +135,7 @@ const OverlapTable: FC = () => {
 	// - нахлест (може бути від'ємним) рахується: загальна - корисна.
 
 	return (
-		<div>
+		<div clasName={styles.container}>
 			<h1>Нахлест</h1>
 			<div>
 				<table>

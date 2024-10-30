@@ -23,18 +23,21 @@ import TriangleContainer from '../../figures-components/Triangle/TriangleContain
 import PolygonContainer from '../../figures-components/Polygon/PolygonContainer'
 import { scalesConfig } from '../../../../data'
 import plusImg from '../../../../images/plus.png'
+import { useWindowSize } from '../../../../hooks/useWindowSize'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { setEditedMode, setIsBuildMode } from '../../../../store/settingSlice'
+import {
+	setEditedMode,
+	setIsBuildMode,
+	setSelectedScale,
+} from '../../../../store/settingSlice'
 
-interface Props {
-	// selectedFigure: number
-	// setIsEditedModeCallback: any
-	// isEditedMode: boolean
-}
+interface Props {}
 
 const RoofStage: FC<Props> = () => {
 	const { selectedFigure } = useSelector((state: any) => state.settings)
+
+	const [width, height] = useWindowSize()
 
 	const [clickedCoordsView, setClickedCoordsView] = useState({ x: 0, y: 0 })
 
@@ -58,7 +61,7 @@ const RoofStage: FC<Props> = () => {
 
 	const { dictionaries } = useSelector((state: any) => state.dictionaries)
 	const { figureSides } = useSelector((state: any) => state.figureParams)
-	const { editedMode, isBuildMode } = useSelector(
+	const { editedMode, isBuildMode, selectedScale } = useSelector(
 		(state: any) => state.settings
 	)
 
@@ -122,10 +125,6 @@ const RoofStage: FC<Props> = () => {
 		selectTriangleShape(null)
 		selectPolygonShape(id)
 	}
-
-	// useEffect(() => {
-	// 	//  console.log(appContext.state.isBuildMode)
-	// }, [appContext.state.isBuildMode])
 
 	const [selectedTrapezoidShapeName, setSelectedTrapezoidShapeName] =
 		useState('')
@@ -196,32 +195,17 @@ const RoofStage: FC<Props> = () => {
 		}
 	}
 
-	function changeSquareStartPoints(coords: any) {
-		appContext.dispatch({
-			type: 'rectangle-start-point',
-			payload: { rectangleStartPoint: coords },
-		})
-	}
-
-	function changeRectangleStartPoints(coords: any) {
-		appContext.dispatch({
-			type: 'rectangle-start-point',
-			payload: { rectangleStartPoint: coords },
-		})
-	}
-
 	/// To transformation saving
 	function setNewSides(sides: { width: number; height: number }) {
 		let side1 = (sides.width / appContext.state.gridConfig.cellSize).toFixed(2)
 		let side2 = (sides.height / appContext.state.gridConfig.cellSize).toFixed(2)
 
 		if (selectedFigure === FIGURES.Square) {
-			// console.log('side1: ', side1)
-			// console.log('side2: ', side2)
-			// changeFigureSides({
-			// 	figureASide: side1,
-			// 	figureBSide: side2,
-			// })
+			dispatch(
+				changeFigureSides({
+					figureASide: side1,
+				})
+			)
 		} else if (selectedFigure === FIGURES.Rectangle) {
 			dispatch(
 				changeFigureSides({
@@ -252,7 +236,7 @@ const RoofStage: FC<Props> = () => {
 		//let figureBottomLine = Math.floor(gridHeight / cellSize) * cellSize;
 
 		let figureBottomLine =
-			-gridHeight / scalesConfig[`${appContext.state.selectedScale}`] + cellSize
+			-gridHeight / scalesConfig[`${selectedScale}`] + cellSize
 
 		// if (pointerPosition.y > figureBottomLine)
 		//     pointerPosition.y = figureBottomLine;
@@ -264,22 +248,15 @@ const RoofStage: FC<Props> = () => {
 				type: 'set-clicked-coords',
 				payload: {
 					clickedCoords: {
-						x:
-							pointerPosition.x /
-							scalesConfig[`${appContext.state.selectedScale}`],
-						y:
-							-pointerPosition.y /
-							scalesConfig[`${appContext.state.selectedScale}`],
+						x: pointerPosition.x / scalesConfig[`${selectedScale}`],
+						y: -pointerPosition.y / scalesConfig[`${selectedScale}`],
 					},
 				},
 			})
 
 			setClickedCoords({
-				x:
-					pointerPosition.x / scalesConfig[`${appContext.state.selectedScale}`],
-				y:
-					-pointerPosition.y /
-					scalesConfig[`${appContext.state.selectedScale}`],
+				x: pointerPosition.x / scalesConfig[`${selectedScale}`],
+				y: -pointerPosition.y / scalesConfig[`${selectedScale}`],
 			})
 		}
 
@@ -299,16 +276,6 @@ const RoofStage: FC<Props> = () => {
 			payload: { clickedCoords: pointerPosition },
 		})
 		setClickedCoords(pointerPosition)
-	}
-
-	function editBtnClickHandler(e: any) {
-		appContext.dispatch({ type: 'set-edited-mode', payload: { editedMode: 2 } })
-	}
-	function transformBtnClickHandler(e: any) {
-		appContext.dispatch({ type: 'set-edited-mode', payload: { editedMode: 3 } })
-	}
-	function noEditBtnClickHandler(e: any) {
-		appContext.dispatch({ type: 'set-edited-mode', payload: { editedMode: 1 } })
 	}
 
 	function calcFigurePoints(points: any[]) {
@@ -399,10 +366,6 @@ const RoofStage: FC<Props> = () => {
 							}}
 							onClick={() => {
 								dispatch(setEditedMode(1))
-								appContext.dispatch({
-									type: 'set-build-mode',
-									payload: { isBuildMode: false },
-								})
 
 								appContext.dispatch({
 									type: 'set-clicked-coords',
@@ -464,8 +427,7 @@ const RoofStage: FC<Props> = () => {
 						x:{' '}
 						{
 							+(
-								clickedCoordsView.x /
-									scalesConfig[`${appContext.state.selectedScale}`] -
+								clickedCoordsView.x / scalesConfig[`${selectedScale}`] -
 								appContext.state.gridConfig.cellSize
 							).toFixed(0)
 						}
@@ -473,43 +435,24 @@ const RoofStage: FC<Props> = () => {
 						y:{' '}
 						{+(
 							-appContext.state.gridConfig.height /
-								scalesConfig[`${appContext.state.selectedScale}`] +
+								scalesConfig[`${selectedScale}`] +
 							appContext.state.gridConfig.cellSize +
-							clickedCoordsView.y /
-								scalesConfig[`${appContext.state.selectedScale}`]
+							clickedCoordsView.y / scalesConfig[`${selectedScale}`]
 						).toFixed(0) * -1}
 					</div>
-				</div>
-
-				{/* Messages wrappers */}
-
-				<div
-					className={styles.messageWrapper}
-					style={{
-						display:
-							appContext.state?.editedMode === 3 && selectedFigure
-								? 'block'
-								: 'none',
-					}}
-				>
-					<span>
-						* Клікніть
-						<span className='bold-text'> по фігурі</span> для зміни її розмірів,
-						клікніть на полі <span className='bold-text'>поза фігурою</span> для
-						вимкнення режиму редагування
-					</span>
 				</div>
 
 				{/* Grid wrapper */}
 
 				<div className={styles.gridWrapper} id='grid'>
-					{appContext.state.selectedScale && (
+					{selectedScale && (
 						<StageConsumer>
 							{({ state, dispatch }: { state: any; dispatch: any }) => (
 								<Stage
-									scaleX={+scalesConfig[`${appContext.state.selectedScale}`]}
-									scaleY={-scalesConfig[`${appContext.state.selectedScale}`]}
-									width={gridConfig ? gridConfig.width : 100}
+									scaleX={+scalesConfig[`${selectedScale}`]}
+									scaleY={-scalesConfig[`${selectedScale}`]}
+									width={width - 300 - 80 - 20}
+									// width={gridConfig ? gridConfig.width : 100}
 									height={gridConfig ? gridConfig.height : 100}
 									onMouseDown={checkDeselect}
 									onMouseMove={onMouseMoveHandler}
@@ -527,7 +470,6 @@ const RoofStage: FC<Props> = () => {
 										<AppContext.Provider value={{ state, dispatch }}>
 											<SquareContainer
 												setSelectedRectangleIdCallback={setSelectedSquareId}
-												changeStartPointsCallback={changeSquareStartPoints}
 												// setNewSidesCallback={setNewSides}
 												selectedSquareId={selectedSquareId}
 												setCalcResult={setCalcResult}
@@ -540,7 +482,6 @@ const RoofStage: FC<Props> = () => {
 										<AppContext.Provider value={{ state, dispatch }}>
 											<RectangleContainer
 												setSelectedRectangleIdCallback={setSelectedRectangleId}
-												changeStartPointsCallback={changeRectangleStartPoints}
 												setNewSidesCallback={setNewSides}
 												selectedRectangleId={selectedRectangleId}
 												setCalcResult={setCalcResult}

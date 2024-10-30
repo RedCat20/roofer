@@ -1,8 +1,6 @@
+@import '../../../variables/style.vars.scss';
+
 .calculatorContainer {
-	width: 100%;
-	display: grid;
-	grid-template-rows: auto 1fr;
-	justify-content: center;
 	margin-bottom: 10px;
 }
 
@@ -12,11 +10,12 @@
 
 .mainContainer {
 	display: grid;
-	grid-template-columns: 1fr 1320px;
+	grid-template-columns: 300px 1fr;
 
-	@media screen and (max-width: 1199px) {
-		grid-template-columns: 1fr;
+	@media screen and (max-width: calc($very-large-breakpoint)) {
+		grid-template-columns: 200px 1fr;
 	}
+
 	align-items: start;
 
 	& > div:first-child {
@@ -66,7 +65,6 @@
 	border-radius: 15px;
 	margin-top: 5px;
 	height: 100%;
-	width: 300px;
 	padding: 15px;
 	display: flex;
 	flex-direction: column;

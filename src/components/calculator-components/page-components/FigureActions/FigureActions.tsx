@@ -8,7 +8,7 @@ import { gridParams, scalesConfig } from '../../../../data'
 import AddPointsDialog from '../../../dictionary-components/Dialogs/AddPointsDialog'
 import { FiguresInputs } from './FiguresInputs/FiguresInputs'
 import { useSelector, useDispatch } from 'react-redux'
-
+import { setSelectedScale } from '../../../../store/settingSlice'
 interface Props {}
 
 const FigureActions: FC<Props> = ({}) => {
@@ -17,33 +17,7 @@ const FigureActions: FC<Props> = ({}) => {
 	const { selectedFigure } = useSelector((state: any) => state.settings)
 
 	const { figureSides } = useSelector((state: any) => state.figureParams)
-	const { editedMode } = useSelector((state: any) => state.settings)
-
-	// function onChangeFigureASideHandler(e: any) {
-	// 	dispatch(
-	// 		changeFigureSides({
-	// 			figureASide: e.target.value,
-	// 		})
-	// 	)
-	// }
-
-	// function onChangeFigureBSideHandler(e: any) {
-	// 	changeFigureSides({
-	// 		figureBSide: e.target.value,
-	// 	})
-	// }
-
-	// function onChangeFigureCSideHandler(e: any) {
-	// 	changeFigureSides({
-	// 		figureCSide: e.target.value,
-	// 	})
-	// }
-
-	// function onChangeFigureDSideHandler(e: any) {
-	// 	changeFigureSides({
-	// 		figureDSide: e.target.value,
-	// 	})
-	// }
+	const { selectedScale } = useSelector((state: any) => state.settings)
 
 	/// Functional buttons
 
@@ -61,13 +35,9 @@ const FigureActions: FC<Props> = ({}) => {
 
 			let defaultGridConfig: IGridConfig | null = null
 
-			let createdScale = `scale${appContext.state.selectedScale + 1}`
+			let createdScale = `scale${selectedScale + 1}`
 
-			appContext.dispatch({
-				type: 'set-selected-scale',
-				payload: { selectedScale: appContext.state.selectedScale + 1 },
-			})
-
+			dispatch(setSelectedScale(selectedScale + 1))
 			if (width >= 1920) {
 				defaultGridConfig = gridParams.size1[createdScale]
 			} else if (width < 1920 && width >= 1366) {

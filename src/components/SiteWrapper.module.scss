@@ -1,19 +1,24 @@
 .container {
+	width: 100%;
 	min-height: 100vh;
 	height: 100%;
-	position: relative;
 	background: #f9f6f9;
 	font-size: 14px;
 	line-height: 1.5;
-
 	display: grid;
-	grid-template-rows: auto 1fr auto;
+	grid-template-rows: 50px 1fr 30px;
 }
 
 .content {
-	position: relative;
-	max-width: 1800px;
-	margin: 0 auto;
 	width: 100%;
-	height: 100%;
+	max-width: 1700px;
+	min-height: calc(100vh - (50px + 30px));
+	height: auto;
+	margin: 0 auto;
+}
+
+.loading {
+	width: 100%;
+	padding: 30px 55px;
+	font-size: 16px;
 }

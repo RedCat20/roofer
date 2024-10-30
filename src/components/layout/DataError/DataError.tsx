@@ -11,7 +11,7 @@ export const DataError: FC<Props> = ({
 }) => {
 	return (
 		<div className={clsx(styles.container)}>
-			<h2>{errorText}</h2>
+			<div className={styles.error}>{errorText}</div>
 		</div>
 	)
 }

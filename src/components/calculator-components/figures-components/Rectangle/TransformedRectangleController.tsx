@@ -6,6 +6,7 @@ import { ICoords } from '../../../../interfaces/coords'
 import TransformedRectangle from './TransformedRectangle'
 import { scalesConfig } from '../../../../data'
 import { AppContext } from '../../../../context/AppContext'
+import { useSelector, useDispatch } from 'react-redux'
 
 interface Props {
 	figureWidth: number
@@ -30,6 +31,7 @@ const TransformedRectangleController: FC<Props> = ({
 }) => {
 	const appContext = useContext(AppContext)
 	let figureBottomLine = Math.floor(gridHeight / cellSize) * cellSize
+	const { selectedScale } = useSelector((state: any) => state.settings)
 
 	let selectShapeHandler = (id: any) => {
 		setSelectedCallback(id)
@@ -51,9 +53,7 @@ const TransformedRectangleController: FC<Props> = ({
 		setRectangles([
 			{
 				x: startCoords.x,
-				y:
-					-gridHeight / scalesConfig[`${appContext.state.selectedScale}`] +
-					cellSize,
+				y: -gridHeight / scalesConfig[`${selectedScale}`] + cellSize,
 				width: figureWidth * cellSize,
 				height: figureHeight * cellSize,
 				fill: 'rgba(139, 69, 19, 0.3)',
@@ -61,7 +61,7 @@ const TransformedRectangleController: FC<Props> = ({
 				id: 'rectangle1',
 			},
 		])
-	}, [appContext.state.selectedScale])
+	}, [selectedScale])
 
 	const [rectangles, setRectangles] = React.useState(currentFigure)
 
@@ -78,7 +78,7 @@ const TransformedRectangleController: FC<Props> = ({
 							selectShapeHandler(rect.id)
 						}}
 						onChange={(newAttrs: any) => {
-							console.log("rectangle new attrs: ", newAttrs)
+							console.log('rectangle new attrs: ', newAttrs)
 							setNewSidesCallback(newAttrs)
 							const rects = rectangles.slice()
 							rects[i] = newAttrs

@@ -1,3 +1,6 @@
+@import '../../../../variables/style.vars.scss';
+
+
 .container {
 	display: flex;
 	flex-direction: column;
@@ -11,7 +14,6 @@
 .infoBlock {
 	font-size: 14px;
 	line-height: 18px;
-	margin: 15px 0;
 
 	padding: 10px 20px 10px 20px;
 	@media screen and (max-width: 1499px) {
@@ -24,6 +26,9 @@
 	grid-template-columns: 50% 50%;
 	grid-column-gap: 10px;
 	grid-row-gap: 15px;
+	@media screen and (max-width: $very-large-breakpoint) {
+		grid-template-columns: 100%;
+	}
 }
 
 .figureButton {

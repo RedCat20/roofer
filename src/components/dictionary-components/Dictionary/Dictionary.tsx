@@ -238,12 +238,16 @@ const Dictionary: FC = () => {
 		<div className={styles.container}>
 			<div className={styles.topContainer}>
 				<div className={styles.blocktitle}>
-					<span className={styles.title}>Довідник </span> {'>'}{' '}
-					<a href='/dictionary' style={{ textDecoration: 'underline' }}>
-						{' '}
-						Категорії
-					</a>{' '}
-					<a> {activeCategory ? `> ${activeCategory.name}` : ''} </a>
+					<h1 className={styles.title}>Довідник </h1> {'>'}{' '}
+					<a href='/dictionary'> Категорії</a>{' '}
+					{activeCategory ? (
+						<>
+							{'> '}
+							{activeCategory.name}
+						</>
+					) : (
+						''
+					)}
 				</div>
 			</div>
 			<div className={styles.article}>

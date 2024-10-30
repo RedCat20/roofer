@@ -191,7 +191,7 @@ const Table: FC = () => {
 	}
 
 	return (
-		<div>
+		<div className={styles.container}>
 			<h1>Листи</h1>
 			<div>
 				<table>

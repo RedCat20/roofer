@@ -11,6 +11,7 @@ import {
 	setRecalcTrapezoidSidesToInputs,
 	getFigureHeight,
 } from '../../../../helpers/scale.helper'
+import { useSelector, useDispatch } from 'react-redux'
 
 import {
 	getTileBottomSheetRecommend,
@@ -47,6 +48,7 @@ const CoveredTrapezoid: FC<Props> = ({
 	setCalcResult,
 }) => {
 	const appContext = useContext(AppContext)
+	const { selectedScale } = useSelector((state: any) => state.settings)
 
 	const [scaledCoords, setScaledCoords] = useState(null)
 	const [cellRows, setCellRows] = useState<any[]>([])
@@ -59,7 +61,7 @@ const CoveredTrapezoid: FC<Props> = ({
 		if (scaledCoords?.length !== 4) return
 
 		let figureBottomLine =
-			-gridHeight / scalesConfig[`${appContext.state.selectedScale}`] + cellSize
+			-gridHeight / scalesConfig[`${selectedScale}`] + cellSize
 		return getNewScaledCoords(scaledCoords, figureBottomLine)
 	}
 
@@ -81,7 +83,7 @@ const CoveredTrapezoid: FC<Props> = ({
 	useEffect(() => {
 		// при першому рендерингу теж відбувається, але поле не порожнє, а з цифрою
 		setScaledCoords(scaledCoords?.length === 4 ? getRecalcCoords() : coords)
-	}, [appContext.state.selectedScale])
+	}, [selectedScale])
 
 	let getLeaveTileSheet = (tileBottomSheetHeightInMm, croossY, bottomLine) => {
 		// приходить все плюсове
@@ -204,7 +206,7 @@ const CoveredTrapezoid: FC<Props> = ({
 			const rowsBlockCounting = { 1: 0, 2: 0, 3: 0 } // кількість блоків в кожному ряді
 
 			let figureBottomLine =
-				-gridHeight / scalesConfig[`${appContext.state.selectedScale}`] +
+				-gridHeight / scalesConfig[`${selectedScale}`] +
 				cellSize
 
 			let value = getTileTopSheetMade(
@@ -226,8 +228,8 @@ const CoveredTrapezoid: FC<Props> = ({
 						for (let b: number = 0; b < step2; b++) {
 							// якщо координата на даній комірці сітки лежить всередині фігури, ми ставимо блок
 							let isPointInPath = ctx.isPointInPath(
-								(i + a) * scalesConfig[`${appContext.state.selectedScale}`],
-								-((j + b) * scalesConfig[`${appContext.state.selectedScale}`])
+								(i + a) * scalesConfig[`${selectedScale}`],
+								-((j + b) * scalesConfig[`${selectedScale}`])
 							)
 
 							if (isPointInPath) {
@@ -249,9 +251,9 @@ const CoveredTrapezoid: FC<Props> = ({
 
 											let isPoint = ctx.isPointInPath(
 												(i + k) *
-													scalesConfig[`${appContext.state.selectedScale}`],
+													scalesConfig[`${selectedScale}`],
 												(-figureBottomLine - step2 * counter - s) *
-													scalesConfig[`${appContext.state.selectedScale}`]
+													scalesConfig[`${selectedScale}`]
 											)
 
 											if (isPoint) {

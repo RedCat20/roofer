@@ -4,28 +4,20 @@ import clsx from 'clsx'
 import styles from './Header.module.scss'
 
 export const Header = () => {
-	const [isActive, setIsActive] = useState(false)
 	let location = useLocation()
-
-	// useEffect(() => {
-	// 	console.log('location', location)
-	// }, [location])
 
 	return (
 		<div className={styles.header}>
-			<div className={clsx('flex', 'justify-start', styles.logo)}>
-				<Link to='/'>
-					<div className='flex flex-row items-center'>
-						<div className={clsx(styles.imgWrapper)}>
-							<img
-								className='block w-[30px]'
-								src='/logo.png'
-								alt='Tile.ua'
-								data-pagespeed-url-hash='2528759146'
-							/>
-						</div>
-						<div className={styles.title}>Roofer</div>
+			<div className={styles.logo}>
+				<Link to='/' className={styles.mainLink}>
+					<div className={styles.imgWrapper}>
+						<img
+							src='/logo.png'
+							alt='Tile.ua'
+							data-pagespeed-url-hash='2528759146'
+						/>
 					</div>
+					<div className={styles.title}>Roofer</div>
 				</Link>
 			</div>
 
@@ -33,7 +25,7 @@ export const Header = () => {
 				<Link to='/'>
 					<button
 						className={clsx(
-							'mr-[5px]',
+							styles.linkBtn,
 							location?.pathname === '/' ? styles.active : ''
 						)}
 					>
@@ -43,7 +35,7 @@ export const Header = () => {
 				<Link to='/dictionary'>
 					<button
 						className={clsx(
-							'mr-[5px] ml-[5px]',
+							styles.linkBtn,
 							location?.pathname === '/dictionary' ? styles.active : ''
 						)}
 					>
@@ -53,7 +45,7 @@ export const Header = () => {
 				<Link to='/calculator'>
 					<button
 						className={clsx(
-							'ml-[5px]',
+							styles.linkBtn,
 							location?.pathname === '/calculator' ? styles.active : ''
 						)}
 					>

@@ -5,6 +5,7 @@ import React, { FC, useContext, useEffect, useState } from 'react'
 import { Layer, Shape } from 'react-konva'
 import { scalesConfig } from '../../../../data'
 import { AppContext } from '../../../../context/AppContext'
+import { useSelector, useDispatch } from 'react-redux'
 
 import {
 	getNewScaledCoords,
@@ -48,6 +49,7 @@ const CoveredTriangle: FC<Props> = ({
 	startCoords,
 }) => {
 	const appContext = useContext(AppContext)
+	const { selectedScale } = useSelector((state: any) => state.settings)
 
 	const [scaledCoords, setScaledCoords] = useState(null)
 	const [cellRows, setCellRows] = useState<any[]>([])
@@ -60,7 +62,7 @@ const CoveredTriangle: FC<Props> = ({
 		if (scaledCoords?.length !== 3) return
 
 		let figureBottomLine =
-			-gridHeight / scalesConfig[`${appContext.state.selectedScale}`] + cellSize
+			-gridHeight / scalesConfig[`${selectedScale}`] + cellSize
 		return getNewScaledCoords(scaledCoords, figureBottomLine)
 	}
 
@@ -82,7 +84,7 @@ const CoveredTriangle: FC<Props> = ({
 	useEffect(() => {
 		// при першому рендерингу теж відбувається, але поле не порожнє, а з цифрою
 		setScaledCoords(scaledCoords?.length === 3 ? getRecalcCoords() : coords)
-	}, [appContext.state.selectedScale])
+	}, [selectedScale])
 
 	// --------------------------------------------------------
 	// Витягування параметрів для блоків по довіднику
@@ -194,7 +196,7 @@ const CoveredTriangle: FC<Props> = ({
 			let Cy = -Math.sqrt(R2 * R2 - Cx * Cx)
 
 			let figureBottomLine =
-				-gridHeight / scalesConfig[`${appContext.state.selectedScale}`] +
+				-gridHeight / scalesConfig[`${selectedScale}`] +
 				cellSize
 
 			let Ox = 0
@@ -242,7 +244,6 @@ const CoveredTriangle: FC<Props> = ({
 			const rowsBlockCounting = { 1: 0, 2: 0, 3: 0 } // кількість блоків в кожному ряді
 
 			// звідки в нас фігура починає будуватися, нижня дотична лінія, її y координата (відповідає 0 по вьюшці)
-			// let figureBottomLine = -gridHeight / scalesConfig[`${appContext.state.selectedScale}`] + cellSize;
 
 			let p = figureASide + figureBSide + figureCSide // периметр
 			let _half_p = p / 2 // півпериметр в см - на основі значень ( введених в інпутах в м )
@@ -266,8 +267,8 @@ const CoveredTriangle: FC<Props> = ({
 						for (let b: number = 0; b < step2; b++) {
 							// якщо координата на даній комірці сітки лежить всередині фігури, ми ставимо блок
 							let isPointInPath = ctx.isPointInPath(
-								(i + a) * scalesConfig[`${appContext.state.selectedScale}`],
-								-((j + b) * scalesConfig[`${appContext.state.selectedScale}`])
+								(i + a) * scalesConfig[`${selectedScale}`],
+								-((j + b) * scalesConfig[`${selectedScale}`])
 							)
 
 							if (isPointInPath) {
@@ -289,9 +290,9 @@ const CoveredTriangle: FC<Props> = ({
 
 											let isPoint = ctx.isPointInPath(
 												(i + k) *
-													scalesConfig[`${appContext.state.selectedScale}`],
+													scalesConfig[`${selectedScale}`],
 												(-figureBottomLine - step2 * counter - s) *
-													scalesConfig[`${appContext.state.selectedScale}`]
+													scalesConfig[`${selectedScale}`]
 											)
 
 											if (isPoint) {

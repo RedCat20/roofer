@@ -4,9 +4,7 @@
 	grid-column-gap: 30px;
 
 	padding: 20px 15px 25px 15px;
-	border: 1px solid #ccc;
 	border-radius: 15px;
-	height: 100%;
 
 	@media screen and (max-width: 1279px) {
 		grid-template-columns: 1fr;

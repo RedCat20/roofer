@@ -6,12 +6,14 @@ export interface SettingsState {
 	selectedFigure: number
 	editedMode: number
 	isBuildMode: boolean
+	selectedScale: number
 }
 
 const initialState: SettingsState = {
 	selectedFigure: FIGURES.None,
 	editedMode: 0,
 	isBuildMode: false,
+	selectedScale: 1,
 }
 
 export const settingsSlice = createSlice({
@@ -27,11 +29,15 @@ export const settingsSlice = createSlice({
 		setIsBuildMode: (state, action: PayloadAction<boolean>) => {
 			state.isBuildMode = action.payload
 		},
+		setSelectedScale: (state, action: PayloadAction<number>) => {
+			state.selectedScale = action.payload
+		},
 	},
 })
 
 export const { setSelectedFigure } = settingsSlice.actions
 export const { setEditedMode } = settingsSlice.actions
 export const { setIsBuildMode } = settingsSlice.actions
+export const { setSelectedScale } = settingsSlice.actions
 
 export default settingsSlice.reducer

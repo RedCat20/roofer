@@ -32,6 +32,7 @@ const FullRectangle: FC<Props> = ({
 	const { figurePoints, figureSides } = useSelector(
 		(state: any) => state.figureParams
 	)
+	const { selectedScale } = useSelector((state: any) => state.settings)
 
 	useEffect(() => {
 		dispatch(
@@ -48,10 +49,7 @@ const FullRectangle: FC<Props> = ({
 		<Layer>
 			<Rect
 				x={startCoords.x}
-				y={
-					-gridHeight / scalesConfig[`${appContext.state.selectedScale}`] +
-					cellSize
-				}
+				y={-gridHeight / scalesConfig[`${selectedScale}`] + cellSize}
 				width={width * cellSize}
 				height={height * cellSize}
 				strokeWidth={2}

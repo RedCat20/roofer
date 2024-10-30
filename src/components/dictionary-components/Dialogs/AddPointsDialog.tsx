@@ -22,7 +22,9 @@ const AddPointsDialog: FC<IAddTableRowDialogProps> = ({
 	const [newPointsArr, setNewPointsArr] = useState<object[]>([])
 
 	const dispatch = useDispatch()
-	const { selectedFigure } = useSelector((state: any) => state.settings)
+	const { selectedFigure, selectedScale } = useSelector(
+		(state: any) => state.settings
+	)
 	const { figureSides, figurePoints } = useSelector(
 		(state: any) => state.figureParams
 	)
@@ -49,16 +51,15 @@ const AddPointsDialog: FC<IAddTableRowDialogProps> = ({
 
 			let convertedX = +(
 				+document.querySelector(`#x-${i}`).value *
-					scalesConfig[`${appContext.state.selectedScale}`] +
+					scalesConfig[`${selectedScale}`] +
 				appContext.state.gridConfig.cellSize
 			).toFixed(2)
 
 			let convertedY = +(
-				-appContext.state.gridConfig.height *
-					scalesConfig[`${appContext.state.selectedScale}`] +
+				-appContext.state.gridConfig.height * scalesConfig[`${selectedScale}`] +
 				appContext.state.gridConfig.cellSize +
 				+document.querySelector(`#y-${i}`).value *
-					scalesConfig[`${appContext.state.selectedScale}`]
+					scalesConfig[`${selectedScale}`]
 			).toFixed(2)
 
 			arr.push({ x: convertedX, y: convertedY })

@@ -1,11 +1,13 @@
 .stageContainer {
 	display: flex;
 	flex-direction: column;
-	// justify-content: center;
-	// align-items: center;
-	// overflow: auto;
-	margin-bottom: 15px;
 
+	margin-bottom: 15px;
+	height: auto;
+	min-height: 100%;
+	background: #ccc;
+	border-radius: 15px;
+	margin-top: 5px;
 	@media screen and (max-width: 1699px) {
 		padding-top: 10px;
 		padding-bottom: 10px;
@@ -17,11 +19,7 @@
 }
 
 .gridWrapper {
-	// max-width: calc(100vw - 40px);
-	// margin: 0 auto;
-	// overflow: auto;
 	padding: 10px;
-	//width: 100%;
 	background: #ffffff;
 	border-radius: 5px;
 	box-shadow: 0 0 10px 3px rgba(221, 221, 221, 0.5);
