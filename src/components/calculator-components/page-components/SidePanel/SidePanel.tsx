@@ -32,10 +32,8 @@ const SidePanel: FC<Props> = () => {
 
 	function onChooseFigure(e: any) {
 		let figureBtnId = e.target.id
-		console.log('figureBtnId', e.target)
 		let re = new RegExp('(?<=_).*')
 		if (!figureBtnId.match(re)) {
-			console.log('!figureBtnId.match(re)', !figureBtnId.match(re))
 			return
 		}
 		let subStrId = figureBtnId.match(re)[0]

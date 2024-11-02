@@ -12,6 +12,7 @@ const initialState: DictionaryState = {
 		figureBSide: 0,
 		figureCSide: 0,
 		figureDSide: 0,
+		figureHSide: 0,
 	},
 	figurePoints: [
 		{ x0: 0, y0: 0 },
@@ -26,7 +27,7 @@ export const figureParamsSlice = createSlice({
 	initialState,
 	reducers: {
 		changeFigureSides: (state, action: PayloadAction<any>) => {
-			console.log('action', action)
+			// console.log('action', action)
 			state.figureSides = {
 				figureASide:
 					action.payload.figureASide >= 0
@@ -44,15 +45,23 @@ export const figureParamsSlice = createSlice({
 					action.payload.figureDSide >= 0
 						? Number(action.payload.figureDSide)
 						: state.figureSides.figureDSide,
+				figureHSide:
+					action.payload.figureHSide >= 0
+						? Number(action.payload.figureHSide)
+						: state.figureSides.figureHSide,
 			}
 		},
 		changeFigurePoints: (state, action: PayloadAction<any>) => {
-			state.figurePoints = [
-				{ x0: 0, y0: 0 },
-				{ x1: 0, y1: 0 },
-				{ x2: 0, y2: 0 },
-				{ x3: 0, y3: 0 },
-			]
+			state.figurePoints = action.payload
+
+			// state.figurePoints = [
+			// 	{ x1: 0, y1: 0 },
+			// 	{ x2: 0, y2: 0 },
+			// 	{ x3: 0, y3: 0 },
+			// 	{ x4: 0, y4: 0 },
+			// 	{ x5: 0, y5: 0 },
+			// 	{ x6: 0, y6: 0 },
+			// ]
 		},
 	},
 })

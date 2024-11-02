@@ -48,6 +48,13 @@ export const FiguresInputs: FC<Props> = ({}) => {
 		)
 	}
 
+	function onChangeFigureHSideHandler(e: any) {
+		dispatch(
+			changeFigureSides({
+				figureHSide: e.target.value,
+			})
+		)
+	}
 	return (
 		<div className={styles.container}>
 			<div className={styles.label}>
@@ -58,7 +65,6 @@ export const FiguresInputs: FC<Props> = ({}) => {
 					type='number'
 					value={figureSides.figureASide}
 					disabled={
-						editedMode > 1 ||
 						selectedFigure === FIGURES.None ||
 						selectedFigure === FIGURES.None ||
 						selectedFigure === FIGURES.Polygon
@@ -77,7 +83,6 @@ export const FiguresInputs: FC<Props> = ({}) => {
 					value={figureSides.figureBSide}
 					onChange={onChangeFigureBSideHandler.bind(this)}
 					disabled={
-						editedMode > 1 ||
 						selectedFigure === FIGURES.None ||
 						selectedFigure === FIGURES.Square ||
 						selectedFigure === FIGURES.Polygon
@@ -95,11 +100,11 @@ export const FiguresInputs: FC<Props> = ({}) => {
 					value={figureSides.figureCSide}
 					onChange={onChangeFigureCSideHandler.bind(this)}
 					disabled={
-						editedMode > 1 ||
 						selectedFigure === FIGURES.None ||
 						selectedFigure === FIGURES.Square ||
 						selectedFigure === FIGURES.Rectangle ||
-						selectedFigure == FIGURES.Polygon
+						selectedFigure == FIGURES.Polygon ||
+						selectedFigure == FIGURES.Trapezoid
 					}
 				/>
 				<span>m</span>
@@ -114,13 +119,28 @@ export const FiguresInputs: FC<Props> = ({}) => {
 					value={figureSides.figureDSide}
 					onChange={onChangeFigureDSideHandler.bind(this)}
 					disabled={
-						editedMode > 1 ||
 						appContext.state.selectedFigure === FIGURES.None ||
 						appContext.state.selectedFigure === FIGURES.Square ||
 						appContext.state.selectedFigure === FIGURES.Rectangle ||
 						appContext.state.selectedFigure === FIGURES.Triangular ||
 						appContext.state.selectedFigure === FIGURES.Trapezoid ||
 						appContext.state.selectedFigure === FIGURES.Polygon
+					}
+				/>
+				<span>m</span>
+			</div>
+
+			<div className={styles.label}>
+				<span>H:</span>
+				<input
+					className={styles.input}
+					id='figure-d-side-input'
+					type='number'
+					value={figureSides.figureHSide}
+					onChange={onChangeFigureHSideHandler.bind(this)}
+					disabled={
+						editedMode > 1 ||
+						selectedFigure !== FIGURES.Trapezoid
 					}
 				/>
 				<span>m</span>

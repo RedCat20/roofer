@@ -23,12 +23,9 @@
 
 .figureButtons {
 	display: grid;
-	grid-template-columns: 50% 50%;
+	grid-template-columns: 1fr;
 	grid-column-gap: 10px;
 	grid-row-gap: 15px;
-	@media screen and (max-width: $very-large-breakpoint) {
-		grid-template-columns: 100%;
-	}
 }
 
 .figureButton {

@@ -18,7 +18,7 @@ export const appReducer = (state: any, action: any) => {
 		case 'set-default-grid-config': {
 			return {
 				...state,
-				gridConfig: action.payload ? action.payload.gridConfig : false,
+				gridConfig: action.payload ? action.payload.gridConfig : null,
 			}
 		}
 

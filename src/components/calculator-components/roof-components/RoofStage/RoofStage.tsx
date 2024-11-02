@@ -32,12 +32,19 @@ import {
 	setSelectedScale,
 } from '../../../../store/settingSlice'
 
+import {
+	asideWidth,
+	veryLargeBreakpoint,
+	mainPadding,
+	roofPadding,
+} from '../../../../variables/style.vars.js'
+
 interface Props {}
 
 const RoofStage: FC<Props> = () => {
 	const { selectedFigure } = useSelector((state: any) => state.settings)
 
-	const [width, height] = useWindowSize()
+	// const [width, height] = useWindowSize()
 
 	const [clickedCoordsView, setClickedCoordsView] = useState({ x: 0, y: 0 })
 
@@ -45,7 +52,7 @@ const RoofStage: FC<Props> = () => {
 
 	const appContext = useContext(AppContext)
 
-	const gridConfig = useGridConfig(window, 1)
+	const gridConfig = useGridConfig(window)
 
 	const [trapezoidPoints, setTrapezoidPoints] = useState<any[]>([])
 	const [trianglePoints, setTrianglePoints] = useState<any[]>([])
@@ -197,6 +204,8 @@ const RoofStage: FC<Props> = () => {
 
 	/// To transformation saving
 	function setNewSides(sides: { width: number; height: number }) {
+		console.log('sides: ', sides)
+
 		let side1 = (sides.width / appContext.state.gridConfig.cellSize).toFixed(2)
 		let side2 = (sides.height / appContext.state.gridConfig.cellSize).toFixed(2)
 
@@ -364,6 +373,7 @@ const RoofStage: FC<Props> = () => {
 							style={{
 								background: editedMode === 1 ? 'lightgreen' : '',
 							}}
+							disabled={!selectedFigure}
 							onClick={() => {
 								dispatch(setEditedMode(1))
 
@@ -384,11 +394,14 @@ const RoofStage: FC<Props> = () => {
 							onClick={() => {
 								dispatch(setEditedMode(2))
 							}}
-							disabled={[
-								FIGURES.Trapezoid,
-								FIGURES.Triangular,
-								FIGURES.Polygon,
-							].includes(selectedFigure)}
+							disabled={
+								!selectedFigure ||
+								[
+									FIGURES.Trapezoid,
+									FIGURES.Triangular,
+									FIGURES.Polygon,
+								].includes(selectedFigure)
+							}
 						>
 							Пропорційна трансформація
 						</button>
@@ -397,9 +410,10 @@ const RoofStage: FC<Props> = () => {
 							style={{
 								background: editedMode === 3 ? 'lightgreen' : '',
 							}}
-							disabled={[FIGURES.Rectangle, FIGURES.Square].includes(
-								selectedFigure
-							)}
+							disabled={
+								!selectedFigure ||
+								[FIGURES.Rectangle, FIGURES.Square].includes(selectedFigure)
+							}
 							onClick={() => {
 								dispatch(setEditedMode(3))
 							}}
@@ -411,34 +425,33 @@ const RoofStage: FC<Props> = () => {
 							style={{
 								background: editedMode === 4 ? 'lightgreen' : '',
 							}}
+							disabled={!selectedFigure}
 							onClick={buildButtonHandler.bind(this)}
 						>
 							Накладання блоків
 						</button>
 					</div>
 
-					<div
-						style={{
-							marginRight: '5px',
-							display: 'flex',
-							alignItems: 'center',
-						}}
-					>
-						x:{' '}
-						{
-							+(
-								clickedCoordsView.x / scalesConfig[`${selectedScale}`] -
-								appContext.state.gridConfig.cellSize
-							).toFixed(0)
-						}
-						<br />
-						y:{' '}
-						{+(
-							-appContext.state.gridConfig.height /
-								scalesConfig[`${selectedScale}`] +
-							appContext.state.gridConfig.cellSize +
-							clickedCoordsView.y / scalesConfig[`${selectedScale}`]
-						).toFixed(0) * -1}
+					<div className={styles.coords}>
+						<div>
+							x:{' '}
+							{
+								+(
+									clickedCoordsView.x / scalesConfig[`${selectedScale}`] -
+									appContext.state.gridConfig.cellSize
+								).toFixed(0)
+							}
+							<br />
+						</div>
+						<div>
+							y:{' '}
+							{+(
+								-appContext.state.gridConfig.height /
+									scalesConfig[`${selectedScale}`] +
+								appContext.state.gridConfig.cellSize +
+								clickedCoordsView.y / scalesConfig[`${selectedScale}`]
+							).toFixed(0) * -1}
+						</div>
 					</div>
 				</div>
 
@@ -449,11 +462,10 @@ const RoofStage: FC<Props> = () => {
 						<StageConsumer>
 							{({ state, dispatch }: { state: any; dispatch: any }) => (
 								<Stage
-									scaleX={+scalesConfig[`${selectedScale}`]}
-									scaleY={-scalesConfig[`${selectedScale}`]}
-									width={width - 300 - 80 - 20}
-									// width={gridConfig ? gridConfig.width : 100}
-									height={gridConfig ? gridConfig.height : 100}
+									scaleX={+1}
+									scaleY={-1}
+									width={gridConfig?.width}
+									height={gridConfig?.height}
 									onMouseDown={checkDeselect}
 									onMouseMove={onMouseMoveHandler}
 									onTouchStart={checkDeselect}
@@ -470,7 +482,6 @@ const RoofStage: FC<Props> = () => {
 										<AppContext.Provider value={{ state, dispatch }}>
 											<SquareContainer
 												setSelectedRectangleIdCallback={setSelectedSquareId}
-												// setNewSidesCallback={setNewSides}
 												selectedSquareId={selectedSquareId}
 												setCalcResult={setCalcResult}
 											/>
@@ -482,7 +493,7 @@ const RoofStage: FC<Props> = () => {
 										<AppContext.Provider value={{ state, dispatch }}>
 											<RectangleContainer
 												setSelectedRectangleIdCallback={setSelectedRectangleId}
-												setNewSidesCallback={setNewSides}
+												// setNewSidesCallback={setNewSides}
 												selectedRectangleId={selectedRectangleId}
 												setCalcResult={setCalcResult}
 											/>

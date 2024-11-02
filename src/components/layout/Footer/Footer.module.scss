@@ -1,7 +1,9 @@
+@import '../../../variables/style.vars.scss';
+
 .container {
 	padding-left: 15px;
 	padding-right: 15px;
-	background: rgba(33, 35, 46, 0.7);
+	background: $darkGray;
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;

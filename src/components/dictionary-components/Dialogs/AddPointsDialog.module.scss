@@ -3,14 +3,11 @@
 .container {
 	margin-top: 15px;
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 1fr;
 	grid-column-gap: 30px;
 	grid-row-gap: 10px;
 	color: #ffff;
 	font-style: normal;
-	@media screen and (max-width: $very-large-breakpoint) {
-		grid-template-columns: 1fr;
-	}
 }
 
 .label {

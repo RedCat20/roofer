@@ -38,20 +38,20 @@ const FigureActions: FC<Props> = ({}) => {
 			let createdScale = `scale${selectedScale + 1}`
 
 			dispatch(setSelectedScale(selectedScale + 1))
-			if (width >= 1920) {
-				defaultGridConfig = gridParams.size1[createdScale]
-			} else if (width < 1920 && width >= 1366) {
-				defaultGridConfig = gridParams.size2[createdScale]
-			} else if (width < 1366 && width >= 1000) {
-				defaultGridConfig = gridParams.size3[createdScale]
-			} else if (width < 999) {
-				defaultGridConfig = gridParams.size4[createdScale]
-			}
+			// if (width >= 1920) {
+			// 	defaultGridConfig = gridParams.size1[createdScale]
+			// } else if (width < 1920 && width >= 1366) {
+			// 	defaultGridConfig = gridParams.size2[createdScale]
+			// } else if (width < 1366 && width >= 1000) {
+			// 	defaultGridConfig = gridParams.size3[createdScale]
+			// } else if (width < 999) {
+			// 	defaultGridConfig = gridParams.size4[createdScale]
+			// }
 
-			appContext.dispatch({
-				type: 'set-default-grid-config',
-				payload: { gridConfig: defaultGridConfig },
-			})
+			// appContext.dispatch({
+			// 	type: 'set-default-grid-config',
+			// 	payload: { gridConfig: defaultGridConfig },
+			// })
 		}
 
 		// dispatch(
@@ -82,7 +82,6 @@ const FigureActions: FC<Props> = ({}) => {
 	}
 
 	let setPointsToBuildPolygon = (points: any[]) => {
-		console.log('points: ', points)
 		setIsAddPointsDialog(false)
 		//alert(points)
 		if (points?.length > 0) {
@@ -106,8 +105,6 @@ const FigureActions: FC<Props> = ({}) => {
 	)
 
 	/// Render
-
-	console.log('figureSides', figureSides)
 
 	return (
 		<>

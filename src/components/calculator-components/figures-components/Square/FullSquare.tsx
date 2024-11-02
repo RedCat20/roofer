@@ -4,39 +4,26 @@ import React, { FC, useContext, useEffect, useState } from 'react'
 import { Rect, Layer } from 'react-konva'
 import { ICoords } from '../../../../interfaces/coords'
 import { scalesConfig } from '../../../../data'
-import { AppContext } from '../../../../context/AppContext'
 import { useSelector, useDispatch } from 'react-redux'
+import { useGridConfig } from '../../../../hooks/useGridConfig'
 
 interface Props {
 	width: number
-	startCoords: ICoords
-	cellSize: number
-	gridHeight: number
+	gridConfig: any
 }
 
-const FullSquare: FC<Props> = ({
-	width,
-	startCoords,
-	cellSize,
-	gridHeight,
-}) => {
-	const [topLine, setTopLine] = useState(0)
-	const appContext = useContext(AppContext)
+const FullSquare: FC<Props> = ({ width, gridConfig }) => {
 	const { selectedScale } = useSelector((state: any) => state.settings)
-
-	useEffect(() => {
-		let value = Math.floor(gridHeight / cellSize) * cellSize - width * cellSize
-		setTopLine(value)
-	}, [gridHeight, width, cellSize])
+	const { startCoords, cellSize } = gridConfig
 
 	return (
 		<Layer>
 			<Rect
 				x={startCoords.x}
-				y={-gridHeight / scalesConfig[`${selectedScale}`] + cellSize}
+				y={startCoords.y}
 				width={width * cellSize}
 				height={width * cellSize}
-				//fill="gold"
+				// fill='gold'
 				strokeWidth={2}
 				stroke={'black'}
 				opacity={1}

@@ -7,7 +7,7 @@ import SiteWrapper from './components/SiteWrapper'
 import './App.scss'
 
 const App: FC = () => {
-	console.log('store: ', store.getState())
+	// console.log('store: ', store.getState())
 	return (
 		<Provider store={store}>
 			<AppContextProvider>

@@ -20,10 +20,11 @@ import {
 import SheetRectangle from '../../covered-items-components/SheetRectangle'
 import HorizontalLine from '../../covered-items-components/HorizontalLine'
 import VerticalLine from '../../covered-items-components/VerticalLine'
+import { useGridConfig } from '../../../../hooks/useGridConfig'
 
 interface Props {
-	cellSize: number
-	gridHeight: number
+	// cellSize: number
+	// gridHeight: number
 	coords: any[]
 	dictionaryItem: any
 
@@ -31,23 +32,35 @@ interface Props {
 	figureBSide: number
 	figureCSide: number
 	figureDSide: number
+	figureHSide
 
 	setCalcResult: any
+
+	// gridConfig
 }
 
 const CoveredTrapezoid: FC<Props> = ({
-	cellSize,
+	// cellSize,
 	coords,
-	gridHeight,
+	// gridHeight,
 	dictionaryItem,
 	figureASide,
 	figureBSide,
 	figureCSide,
 	figureDSide,
+	figureHSide,
 
 	setCalcResult,
+	// gridConfig,
 }) => {
+
+
+	console.log('coords 0: ', coords)
+
+	const gridConfig = useGridConfig()
+
 	const appContext = useContext(AppContext)
+
 	const { selectedScale } = useSelector((state: any) => state.settings)
 
 	const [scaledCoords, setScaledCoords] = useState(null)
@@ -60,8 +73,7 @@ const CoveredTrapezoid: FC<Props> = ({
 	function getRecalcCoords() {
 		if (scaledCoords?.length !== 4) return
 
-		let figureBottomLine =
-			-gridHeight / scalesConfig[`${selectedScale}`] + cellSize
+		let figureBottomLine = gridConfig?.startCoords?.y
 		return getNewScaledCoords(scaledCoords, figureBottomLine)
 	}
 
@@ -155,8 +167,12 @@ const CoveredTrapezoid: FC<Props> = ({
 	}
 
 	let sceneFunc = function (ctx: any, shape: any) {
+		const cellSize = gridConfig?.cellSize
+
 		if (scaledCoords?.length === 4) {
 			let coords = getRecalcCoords().slice()
+
+			console.log('coords: ', coords)
 
 			let tileWidthInMm = 420 / 10
 
@@ -205,9 +221,7 @@ const CoveredTrapezoid: FC<Props> = ({
 			let cyrcle_counter = 0
 			const rowsBlockCounting = { 1: 0, 2: 0, 3: 0 } // кількість блоків в кожному ряді
 
-			let figureBottomLine =
-				-gridHeight / scalesConfig[`${selectedScale}`] +
-				cellSize
+			let figureBottomLine = gridConfig?.startCoords?.y
 
 			let value = getTileTopSheetMade(
 				_triangle_h,
@@ -217,7 +231,7 @@ const CoveredTrapezoid: FC<Props> = ({
 
 			// ----
 
-			for (let j = figureBottomLine; j <= cellSize; j += step2) {
+			for (let j = figureBottomLine; j <= gridConfig?.cellSize; j += step2) {
 				cyrcle_counter = cyrcle_counter + 1
 
 				for (let i = cellSize; i < 1100; i += tileWidthInMm) {
@@ -227,10 +241,7 @@ const CoveredTrapezoid: FC<Props> = ({
 
 						for (let b: number = 0; b < step2; b++) {
 							// якщо координата на даній комірці сітки лежить всередині фігури, ми ставимо блок
-							let isPointInPath = ctx.isPointInPath(
-								(i + a) * scalesConfig[`${selectedScale}`],
-								-((j + b) * scalesConfig[`${selectedScale}`])
-							)
+							let isPointInPath = ctx.isPointInPath(i + a, -(j + b))
 
 							if (isPointInPath) {
 								rowsBlockCounting[cyrcle_counter] += 1
@@ -250,10 +261,8 @@ const CoveredTrapezoid: FC<Props> = ({
 											// йдемо по блоку горизонтально зліва вправо
 
 											let isPoint = ctx.isPointInPath(
-												(i + k) *
-													scalesConfig[`${selectedScale}`],
-												(-figureBottomLine - step2 * counter - s) *
-													scalesConfig[`${selectedScale}`]
+												i + k,
+												-figureBottomLine - step2 * counter - s
 											)
 
 											if (isPoint) {

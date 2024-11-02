@@ -13,12 +13,9 @@
 
 .tabs {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 1fr;
 	gap: 2px;
 	align-items: center;
-	@media screen and (max-width: $very-large-breakpoint) {
-		grid-template-columns: 1fr;
-	}
 	button {
 		border: 1px solid #ddbeaa;
 		width: 100%;
@@ -29,18 +26,8 @@
 		&:hover {
 			cursor: pointer;
 		}
-		&:first-child {
-			border-radius: 10px 0 0 0;
-			@media screen and (max-width: $very-large-breakpoint) {
-				border-radius: 5px;
-			}
-		}
-		&:last-child {
-			border-radius: 0 10px 0 0;
-			@media screen and (max-width: $very-large-breakpoint) {
-				border-radius: 5px;
-			}
-		}
+
+		border-radius: 5px;
 	}
 }
 

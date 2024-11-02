@@ -120,7 +120,7 @@ interface TrapProps {
 	trapezoidPoints: any[]
 	selectedShapeName: string
 	setNewSidesCallback: (sides: any) => void
-	cellSize: any
+	// cellSize: any
 }
 
 interface TrapState {}

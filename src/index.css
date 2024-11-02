@@ -19,15 +19,13 @@ body {
 	padding: 0;
 }
 
-body {
+body {		
+	color: #1b1b1b;
 	font-family: 'Roboto', 'Arial', 'sans-serif';
 	font-size: 14px;
 	line-height: 1.5;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-
-	color: #1b1b1b;
-	background: rgba(33, 35, 46, 0.7);
 }
 
 code {

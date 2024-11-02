@@ -14,7 +14,7 @@ import { Footer } from './layout/Footer/Footer'
 
 const SiteWrapper: FC = () => {
 	const { data: dictionaries, error, isLoading } = useGetDictionariesQuery('')
-	const [width, height] = useWindowSize()
+	// const [width, height] = useWindowSize()
 
 	const state = useSelector((state: RootState) => {
 		return state
@@ -27,15 +27,18 @@ const SiteWrapper: FC = () => {
 				{isLoading ? (
 					<div className={styles.loading}>Loading...</div>
 				) : (
-					<div className={styles.content}>
-						{width < 900 ? (
-							<DataError errorText='Потрібен прилад з більшою шириною' />
-						) : !error ? (
-							<Routers defaultDictionaries={dictionaries} />
-						) : (
-							<DataError />
-						)}
-					</div>
+					<>
+						{
+							// width < 900 ? (
+							// 	<DataError errorText='Потрібен прилад з більшою шириною' />
+							// ) :
+							!error ? (
+								<Routers defaultDictionaries={dictionaries} />
+							) : (
+								<DataError />
+							)
+						}
+					</>
 				)}
 			</div>
 			<Footer />

@@ -1,7 +1,7 @@
 @import '../../../variables/style.vars.scss';
 
 .calculatorContainer {
-	margin-bottom: 10px;
+	// margin-bottom: 10px;
 }
 
 .topContainer {
@@ -10,26 +10,22 @@
 
 .mainContainer {
 	display: grid;
-	grid-template-columns: 300px 1fr;
-
-	@media screen and (max-width: calc($very-large-breakpoint)) {
-		grid-template-columns: 200px 1fr;
-	}
-
+	grid-template-columns: 200px 1fr;
 	align-items: start;
+	justify-content: space-between;
 
-	& > div:first-child {
-		padding: 20px;
-		@media screen and (max-width: 1499px) {
-			padding: 15px;
-		}
-	}
-	& > div:last-child {
-		padding: 20px 20px 0 20px;
-		@media screen and (max-width: 1499px) {
-			padding: 15px 0 15px 0;
-		}
-	}
+	// & > div:first-child {
+	// 	padding: 20px;
+	// 	@media screen and (max-width: 1499px) {
+	// 		padding: 15px;
+	// 	}
+	// }
+	// & > div:last-child {
+	// 	padding: 20px 20px 0 20px;
+	// 	@media screen and (max-width: 1499px) {
+	// 		padding: 15px 0 15px 0;
+	// 	}
+	// }
 }
 
 .selectWrapper {
@@ -62,14 +58,28 @@
 }
 
 .aside {
-	border-radius: 15px;
-	margin-top: 5px;
 	height: 100%;
+	// margin-top: 5px;
+	// margin-bottom: 15px;
 	padding: 15px;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	font-size: 24px !important;
 	font-style: italic;
+	// border-radius: 15px;
 	background: #61626b;
+}
+
+.main {
+	height: 100%;
+	// margin-top: 5px;
+	// margin-bottom: 15px;
+	// padding: 15px;
+	// border-radius: 15px;
+	// border: 1px solid $darkGray;
+	background: #ccc;
+
+	// position: relative;
+	// top: 0;
 }

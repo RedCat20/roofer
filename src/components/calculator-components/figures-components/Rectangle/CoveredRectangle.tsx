@@ -10,31 +10,23 @@ import { useSelector, useDispatch } from 'react-redux'
 interface Props {
 	width: number
 	height: number
-	cellSize: number
-	gridHeight: number
 	dictionaryItem: any
 	setCalcResult: any
-
-	startCoords: any
+	gridConfig: any
 }
 
 const CoveredSquare: FC<Props> = ({
 	width,
 	height,
-	cellSize,
-	gridHeight,
 	dictionaryItem,
 	setCalcResult,
-	startCoords,
+	gridConfig,
 }) => {
-	const appContext = useContext(AppContext)
 	const { selectedScale } = useSelector((state: any) => state.settings)
+	const { cellSize, height: gridHeight, startCoords } = gridConfig
 
 	function createCellRows() {
-		let figureBottomLine =
-			-gridHeight / scalesConfig[`${selectedScale}`] +
-			cellSize +
-			height * cellSize
+		let figureBottomLine = startCoords.y + height * cellSize
 
 		let convertedWidth = width * cellSize
 
@@ -238,7 +230,7 @@ const CoveredSquare: FC<Props> = ({
 			<Layer>
 				<Rect
 					x={startCoords.x}
-					y={-gridHeight / scalesConfig[`${selectedScale}`] + cellSize}
+					y={startCoords.y}
 					width={width * cellSize}
 					height={height * cellSize}
 					fill='gold'

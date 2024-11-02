@@ -4,7 +4,6 @@ import React, { FC, useContext, useEffect } from 'react'
 import { Rect, Layer } from 'react-konva'
 import { ICoords } from '../../../../interfaces/coords'
 import { scalesConfig } from '../../../../data'
-import { AppContext } from '../../../../context/AppContext'
 import {
 	changeFigureSides,
 	changeFigurePoints,
@@ -14,25 +13,16 @@ import { useSelector, useDispatch } from 'react-redux'
 interface Props {
 	width: number
 	height: number
-	startCoords: ICoords
-	cellSize: number
-	gridHeight: number
+	gridConfig: any
 }
 
-const FullRectangle: FC<Props> = ({
-	width,
-	height,
-	startCoords,
-	cellSize,
-	gridHeight,
-}) => {
-	let figureBottomLine = Math.floor(gridHeight / cellSize) * cellSize
-	const appContext = useContext(AppContext)
+const FullRectangle: FC<Props> = ({ width, height, gridConfig }) => {
 	const dispatch = useDispatch()
 	const { figurePoints, figureSides } = useSelector(
 		(state: any) => state.figureParams
 	)
 	const { selectedScale } = useSelector((state: any) => state.settings)
+	const { startCoords, cellSize } = gridConfig
 
 	useEffect(() => {
 		dispatch(
@@ -49,7 +39,7 @@ const FullRectangle: FC<Props> = ({
 		<Layer>
 			<Rect
 				x={startCoords.x}
-				y={-gridHeight / scalesConfig[`${selectedScale}`] + cellSize}
+				y={startCoords.y}
 				width={width * cellSize}
 				height={height * cellSize}
 				strokeWidth={2}

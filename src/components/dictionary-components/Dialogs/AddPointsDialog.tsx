@@ -6,6 +6,10 @@ import { AppContext } from '../../../context/AppContext'
 import { useSelector, useDispatch } from 'react-redux'
 import styles from './AddPointsDialog.module.scss'
 import { FIGURES } from '../../../enums/figure.enum'
+import {
+	changeFigurePoints,
+	changeFigureSides,
+} from '../../../store/figureParamsSlice'
 
 interface IAddTableRowDialogProps {
 	pointsArr?: any
@@ -36,7 +40,7 @@ const AddPointsDialog: FC<IAddTableRowDialogProps> = ({
 			{ x: figureSides.figureASide, y: figureSides.figureBSide },
 			{ x: 0, y: figureSides.figureBSide },
 		])
-	}, [figureSides])
+	}, [selectedFigure, figureSides])
 
 	let onCreatePolygonPoints = () => {
 		let arr = []
@@ -69,8 +73,66 @@ const AddPointsDialog: FC<IAddTableRowDialogProps> = ({
 	}
 
 	const setPointsHandler = e => {
-		// console.log('setPointsHandler: ', e.target.value)
-		// console.log('setPointsHandler: ', e.target.id)
+		const id = e.target.id
+
+		const axis = id.split('-')?.[0]
+		const point = id.split('-')?.[1]
+
+		if (selectedFigure === FIGURES.Square && axis === 'x' && point === '1') {
+			const x1 = e.target.value
+			dispatch(
+				changeFigurePoints([
+					{ x: 0, y: 0 },
+					{ x: x1, y: 0 },
+					{ x: x1, y: x1 },
+					{ x: 0, y: x1 },
+				])
+			)
+			dispatch(
+				changeFigureSides({
+					figureASide: Number(x1),
+					figureBSide: Number(0),
+					figureCSide: Number(0),
+					figureDSide: Number(0),
+				})
+			)
+
+			setNewPointsArr([
+				{ x: 0, y: 0 },
+				{ x: x1, y: 0 },
+				{ x: x1, y: x1 },
+				{ x: 0, y: x1 },
+			])
+		} else if (
+			selectedFigure === FIGURES.Rectangle &&
+			axis === 'x' &&
+			point === '1'
+		) {
+			const x1 = e.target.value
+			dispatch(
+				changeFigurePoints([
+					{ x: 0, y: 0 },
+					{ x: x1, y: 0 },
+					{ x: x1, y: x1 },
+					{ x: 0, y: x1 },
+				])
+			)
+			dispatch(
+				changeFigureSides({
+					figureASide: Number(x1),
+					figureBSide: Number(0),
+					figureCSide: Number(0),
+					figureDSide: Number(0),
+				})
+			)
+
+			setNewPointsArr([
+				{ x: 0, y: 0 },
+				{ x: x1, y: 0 },
+				{ x: x1, y: x1 },
+				{ x: 0, y: x1 },
+			])
+		}
 	}
 
 	return (
@@ -104,6 +166,7 @@ const AddPointsDialog: FC<IAddTableRowDialogProps> = ({
 						type='number'
 						id='x-1'
 						value={newPointsArr[1]?.x}
+						onChange={setPointsHandler}
 					/>
 				</div>
 				<div className={styles.label}>

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React, { FC, useContext } from 'react'
 import FullRectangle from './FullRectangle'
 import CoveredRectangle from './CoveredRectangle'
@@ -5,21 +7,23 @@ import TransformedRectangleController from './TransformedRectangleController'
 import { AppContext } from '../../../../context/AppContext'
 import { ICoords } from '../../../../interfaces/coords'
 import { useSelector, useDispatch } from 'react-redux'
+import { changeFigureSides } from '../../../../store/figureParamsSlice'
+import { useGridConfig } from '../../../../hooks/useGridConfig'
+import { Layer, Text } from 'react-konva'
 
 interface Props {
 	setSelectedRectangleIdCallback: (id: any) => void
-	setNewSidesCallback: (points: any) => void
 	selectedRectangleId: any
 	setCalcResult: any
 }
 
 const RectangleContainer: FC<Props> = ({
 	setSelectedRectangleIdCallback,
-	setNewSidesCallback,
 	selectedRectangleId,
 	setCalcResult,
 }) => {
-	const appContext = useContext(AppContext)
+	const gridConfig = useGridConfig()
+	const dispatch = useDispatch()
 
 	const { dictionaries } = useSelector((state: any) => state.dictionaries)
 	const { figureSides } = useSelector((state: any) => state.figureParams)
@@ -27,7 +31,26 @@ const RectangleContainer: FC<Props> = ({
 		(state: any) => state.settings
 	)
 
-	const { gridConfig } = appContext.state
+	const appContext = useContext(AppContext)
+
+	const setNewSidesCallback = (sides: { width: number; height: number }) => {
+		let side1 = (sides.width / gridConfig.cellSize).toFixed(2)
+		let side2 = (sides.height / gridConfig.cellSize).toFixed(2)
+
+		dispatch(
+			changeFigureSides({
+				figureASide: side1,
+				figureBSide: side2,
+			})
+		)
+	}
+
+	if (!gridConfig)
+		return (
+			<Layer>
+				<Text text='Loading...'></Text>
+			</Layer>
+		)
 
 	return (
 		<>
@@ -35,32 +58,27 @@ const RectangleContainer: FC<Props> = ({
 				<FullRectangle
 					width={figureSides.figureASide}
 					height={figureSides.figureBSide}
-					startCoords={appContext.state.gridConfig.startCoords}
-					cellSize={appContext.state.gridConfig.cellSize}
-					gridHeight={appContext.state.gridConfig.height}
+					gridConfig={gridConfig}
 				/>
 			)}
 			{editedMode === 2 && !isBuildMode && (
 				<TransformedRectangleController
 					figureWidth={figureSides.figureASide}
 					figureHeight={figureSides.figureBSide}
-					startCoords={appContext.state.gridConfig.startCoords}
-					cellSize={appContext.state.gridConfig.cellSize}
+					gridConfig={gridConfig}
+
 					setSelectedCallback={setSelectedRectangleIdCallback}
 					selectedId={selectedRectangleId}
 					setNewSidesCallback={setNewSidesCallback}
-					gridHeight={appContext.state.gridConfig.height}
 				/>
 			)}
-			{editedMode === 4 && isBuildMode && (
+			{editedMode === 4 && isBuildMode && dictionaries?.length && (
 				<CoveredRectangle
 					width={figureSides.figureASide}
 					height={figureSides.figureBSide}
-					cellSize={gridConfig.cellSize}
-					gridHeight={appContext.state.gridConfig.height}
+					gridConfig={gridConfig}
 					dictionaryItem={dictionaries?.[0]}
 					setCalcResult={setCalcResult}
-					startCoords={appContext.state.gridConfig.startCoords}
 				/>
 			)}
 		</>

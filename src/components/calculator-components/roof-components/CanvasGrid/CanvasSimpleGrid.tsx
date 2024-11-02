@@ -7,60 +7,59 @@ import GridNumbers from './GridNumbers'
 import { scalesConfig } from '../../../../data'
 import { AppContext } from '../../../../context/AppContext'
 import { useSelector, useDispatch } from 'react-redux'
+import { useGridConfig } from '../../../../hooks/useGridConfig'
 
-interface Props {
-	cellSize: number
-	gridHeight: number
-	gridHorizontalNumbers: number
-	gridVerticalNumbers: number
-}
+interface Props {}
 
-const CanvasSimpleGrid: FC<Props> = ({
-	cellSize,
-	gridHeight,
-	gridHorizontalNumbers,
-	gridVerticalNumbers,
-}) => {
+const CanvasSimpleGrid: FC<Props> = ({}) => {
 	const appContext = useContext(AppContext)
 	const { selectedScale } = useSelector((state: any) => state.settings)
+	const gridConfig = useGridConfig()
 
 	function createCellRows() {
-		let step = cellSize
+		const horizontalLines = Math.floor(
+			gridConfig?.height / gridConfig?.cellSize
+		)
+		const verticalLines = Math.floor(gridConfig?.width / gridConfig?.cellSize)
+
+		let step = gridConfig?.cellSize
 
 		let arr = []
-		let x = 0
-		let y = -gridHeight / scalesConfig[`${selectedScale}`]
 
-		for (let i = 1; i < 50; i++) {
+		let x = gridConfig?.startCoords.x - gridConfig?.cellSize
+		let y = gridConfig?.startCoords.y - gridConfig?.cellSize
+
+		for (let i = 0; i < verticalLines; i++) {
 			arr.push(
 				<Line
-					key={i}
+					key={'vertical_' + i}
 					x={(x += step)}
-					y={y}
+					y={0}
 					width={10}
-					points={[
-						0,
-						0,
-						0,
-						gridHeight / scalesConfig[`${selectedScale}`] + cellSize * 2,
-						0,
-					]}
-					stroke='rgba(204, 204, 204, 0.25)'
+					points={[0, 0, 0, -gridConfig?.height, 0]}
+					stroke='rgba(204, 204, 204, 0.4)'
 				/>
 			)
 		}
 
-		// for (let i = 1; i < gridVerticalNumbers + 2; i++) {
-		for (let i = 1; i < 50; i++) {
+		x = gridConfig?.startCoords.x - gridConfig?.cellSize
+		y = gridConfig?.startCoords.y - gridConfig?.cellSize
+
+		for (let i = 0; i < horizontalLines; i++) {
 			arr.push(
 				<Line
-					key={100 + i}
-					x={0}
+					key={'horizontal_' + i}
+					x={x}
 					y={(y += step)}
 					width={10}
-					points={[0, 0, 50 * cellSize + cellSize * 2, 0, 0]}
-					// points={[0, 0, gridHorizontalNumbers * cellSize + cellSize * 2, 0, 0]}
-					stroke='rgba(204, 204, 204, 0.25)'
+					points={[
+						0,
+						0,
+						verticalLines * gridConfig?.cellSize + gridConfig?.cellSize / 2,
+						0,
+						0,
+					]}
+					stroke='rgba(204, 204, 204, 0.4)'
 				/>
 			)
 		}
@@ -69,13 +68,7 @@ const CanvasSimpleGrid: FC<Props> = ({
 
 	return (
 		<>
-			<GridNumbers
-				cellSize={cellSize}
-				gridHeight={gridHeight}
-				gridHorizontalNumbers={gridHorizontalNumbers}
-				gridVerticalNumbers={gridVerticalNumbers}
-			/>
-
+			<GridNumbers gridHeight={gridConfig?.gridHeight} />
 			<Layer>{createCellRows()}</Layer>
 		</>
 	)

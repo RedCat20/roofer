@@ -5,20 +5,22 @@ import { Circle, Layer, Line } from 'react-konva'
 import { scalesConfig } from '../../../../data'
 import { AppContext } from '../../../../context/AppContext'
 import { useSelector, useDispatch } from 'react-redux'
+import { useGridConfig } from '../../../../hooks/useGridConfig'
+import { changeFigureSides } from '../../../../store/figureParamsSlice'
 
 interface Props {
 	coords: any[]
 	calcPolygonPointsCallback: (coords: any[]) => void
-	cellSize: any
-	gridHeight: any
+	setNewSidesCallback
 }
 
 const EditedPointedPolygon: FC<Props> = ({
 	coords,
 	calcPolygonPointsCallback,
-	cellSize,
-	gridHeight,
+	setNewSidesCallback,
 }) => {
+	const gridConfig = useGridConfig()
+	const dispatch = useDispatch()
 	const [points, setPoints] = useState<any[]>([])
 	const [builtCustomPoints, setBuiltCustomPoints] = useState([])
 	const appContext = useContext(AppContext)
@@ -27,6 +29,12 @@ const EditedPointedPolygon: FC<Props> = ({
 	const [lines, setLines] = useState<number[]>([])
 
 	const lineRef = React.useRef(null)
+
+	useEffect(() => {
+		console.log('coords 222: ', coords)
+
+		setScaledCoords(coords)
+	}, [coords])
 
 	React.useEffect(() => {
 		//   console.log("use effect lines: ", lines)
@@ -38,29 +46,59 @@ const EditedPointedPolygon: FC<Props> = ({
 
 	const [scaledCoords, setScaledCoords] = useState()
 
+	// useEffect(() => {
+	// 	if (scaledCoords?.length !== 4) return
+
+	// 	let figureBottomLine = gridConfig?.startCoords?.y
+
+	// 	const result = scaledCoords.reduce((a, b) => {
+	// 		return a.y < b.y ? a : b
+	// 	})
+
+	// 	let i = -1 * figureBottomLine - -1 * result.y
+
+	// 	setScaledCoords([
+	// 		{ x: scaledCoords[0].x, y: scaledCoords[0].y - i },
+	// 		{ x: scaledCoords[1].x, y: scaledCoords[1].y - i },
+	// 		{ x: scaledCoords[2].x, y: scaledCoords[2].y - i },
+	// 		{ x: scaledCoords[3].x, y: scaledCoords[3].y - i },
+	// 	])
+	// }, [selectedScale])
+
 	useEffect(() => {
-		if (scaledCoords?.length !== 4) return
-
-		let figureBottomLine =
-			-gridHeight / scalesConfig[`${selectedScale}`] + cellSize
-
-		const result = scaledCoords.reduce((a, b) => {
-			return a.y < b.y ? a : b
-		})
-
-		let i = -1 * figureBottomLine - -1 * result.y
-
-		setScaledCoords([
-			{ x: scaledCoords[0].x, y: scaledCoords[0].y - i },
-			{ x: scaledCoords[1].x, y: scaledCoords[1].y - i },
-			{ x: scaledCoords[2].x, y: scaledCoords[2].y - i },
-			{ x: scaledCoords[3].x, y: scaledCoords[3].y - i },
-		])
-	}, [selectedScale])
-
-	useEffect(() => {
-		setScaledCoords(coords)
-	}, [coords])
+		dispatch(
+			changeFigureSides({
+				figureASide:
+					Math.sqrt(
+						(scaledCoords?.[1]?.x - scaledCoords?.[0]?.x) *
+							(scaledCoords?.[1]?.x - scaledCoords?.[0]?.x) +
+							(scaledCoords?.[1]?.y - scaledCoords?.[0]?.y) *
+								(scaledCoords?.[1]?.y - scaledCoords?.[0]?.y)
+					) / gridConfig?.cellSize,
+				figureDSide:
+					Math.sqrt(
+						(scaledCoords?.[2]?.x - scaledCoords?.[1]?.x) *
+							(scaledCoords?.[2]?.x - scaledCoords?.[1]?.x) +
+							(scaledCoords?.[2]?.y - scaledCoords?.[1]?.y) *
+								(scaledCoords?.[2]?.y - scaledCoords?.[3]?.y)
+					) / gridConfig?.cellSize,
+				figureBSide:
+					Math.sqrt(
+						(scaledCoords?.[3]?.x - scaledCoords?.[2]?.x) *
+							(scaledCoords?.[3]?.x - scaledCoords?.[2]?.x) +
+							(scaledCoords?.[3]?.y - scaledCoords?.[2]?.y) *
+								(scaledCoords?.[3]?.y - scaledCoords?.[2]?.y)
+					) / gridConfig?.cellSize,
+				figureCSide:
+					Math.sqrt(
+						(scaledCoords?.[0]?.x - scaledCoords?.[3]?.x) *
+							(scaledCoords?.[0]?.x - scaledCoords?.[3]?.x) +
+							(scaledCoords?.[0]?.y - scaledCoords?.[3]?.y) *
+								(scaledCoords?.[0]?.y - scaledCoords?.[3]?.y)
+					) / gridConfig?.cellSize,
+			})
+		)
+	}, [scaledCoords])
 
 	React.useEffect(() => {
 		if (scaledCoords?.length === 4) {

@@ -1,12 +1,15 @@
+// @ts-nocheck
+
 import React, { FC, useContext, useEffect, useState } from 'react'
 import FullSquare from './FullSquare'
 import CoveredRectangle from '../Rectangle/CoveredRectangle'
 import TransformedSquareController from './TransformedSquareController'
-import { AppContext } from '../../../../context/AppContext'
 import { ICoords } from '../../../../interfaces/coords'
 import { useSelector, useDispatch } from 'react-redux'
 import CoveredSquare from './CoveredSquare'
 import { changeFigureSides } from '../../../../store/figureParamsSlice'
+import { useGridConfig } from '../../../../hooks/useGridConfig'
+import { Layer, Text } from 'react-konva'
 
 interface Props {
 	setSelectedRectangleIdCallback: (id: any) => void
@@ -21,60 +24,56 @@ const SquareContainer: FC<Props> = ({
 	selectedSquareId,
 	setCalcResult,
 }) => {
-	const appContext = useContext(AppContext)
-	const dispatch = useDispatch();
-	
+	const gridConfig = useGridConfig()
+	const dispatch = useDispatch()
+
 	const { dictionaries } = useSelector((state: any) => state.dictionaries)
 	const { figureSides } = useSelector((state: any) => state.figureParams)
 	const { editedMode, isBuildMode } = useSelector(
 		(state: any) => state.settings
 	)
 
-	const { gridConfig } = appContext.state
-
 	const setNewSidesCallback = (sides: { width: number; height: number }) => {
-		console.log('setNewSidesCallback', sides)
-		let side1 = (sides.width / appContext.state.gridConfig.cellSize).toFixed(2)
-		dispatch(changeFigureSides({
-			figureASide: side1,
-			figureBSide: 0,
-		}))
-		debugger
+		let side1 = (sides.width / gridConfig.cellSize).toFixed(2)
+		dispatch(
+			changeFigureSides({
+				figureASide: side1,
+				figureBSide: 0,
+			})
+		)
 	}
+
+	if (!gridConfig)
+		return (
+			<Layer>
+				<Text text='Loading...'></Text>
+			</Layer>
+		)
 
 	return (
 		<>
-			{editedMode === 1 &&
-				!isBuildMode && ( // || // (editedMode === 4 && isBuildMode))
-					<FullSquare
-						width={figureSides.figureASide}
-						startCoords={appContext.state.gridConfig.startCoords}
-						cellSize={appContext.state.gridConfig.cellSize}
-						gridHeight={appContext.state.gridConfig.height}
-					/>
-				)}
+			{editedMode === 1 && !isBuildMode && (
+				<FullSquare gridConfig={gridConfig} width={figureSides.figureASide} />
+			)}
 
 			{editedMode === 2 && !isBuildMode && (
 				<TransformedSquareController
 					figureWidth={figureSides.figureASide}
 					figureHeight={figureSides.figureASide}
-					startCoords={appContext.state.gridConfig.startCoords}
-					cellSize={appContext.state.gridConfig.cellSize}
+					gridConfig={gridConfig}
+					
 					setSelectedCallback={setSelectedRectangleIdCallback}
 					selectedId={selectedSquareId}
 					setNewSidesCallback={setNewSidesCallback}
-					gridHeight={appContext.state.gridConfig.height}
 				/>
 			)}
-			{editedMode === 4 && isBuildMode && (
+			{editedMode === 4 && isBuildMode && dictionaries?.length && (
 				<CoveredSquare
 					width={figureSides.figureASide}
 					height={figureSides.figureASide}
-					cellSize={gridConfig.cellSize}
-					gridHeight={appContext.state.gridConfig.height}
+					gridConfig={gridConfig}
 					dictionaryItem={dictionaries?.[0]}
 					setCalcResult={setCalcResult}
-					startCoords={appContext.state.gridConfig.startCoords}
 				/>
 			)}
 		</>

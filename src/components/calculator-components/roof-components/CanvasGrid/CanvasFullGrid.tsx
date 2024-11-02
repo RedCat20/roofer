@@ -22,6 +22,7 @@ const CanvasFullGrid: FC<Props> = ({
 	gridVerticalNumbers,
 }) => {
 	const appContext = useContext(AppContext)
+	const { selectedScale } = useSelector((state: any) => state.settings)
 
 	function createCellRows() {
 		let step = cellSize
@@ -34,16 +35,10 @@ const CanvasFullGrid: FC<Props> = ({
 			arr.push(
 				<Line
 					key={i}
-					x={(x += step)}
+					x={x += step}
 					y={y}
 					width={10}
-					points={[
-						0,
-						0,
-						0,
-						gridHeight / scalesConfig[`${selectedScale}`] + cellSize * 2,
-						0,
-					]}
+					points={[0, 0, 0, y, 0]}
 					stroke='rgba(204, 204, 204, 0.5)'
 				/>
 			)

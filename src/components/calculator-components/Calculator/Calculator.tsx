@@ -9,6 +9,8 @@ import {
 import { changeFigureSides } from '../../../store/figureParamsSlice'
 
 import RoofStage from '../roof-components/RoofStage/RoofStage'
+import StageDev from '../roof-dev/StageDev/StageDev'
+
 import SidePanel from '../page-components/SidePanel/SidePanel'
 import BuildPanel from '../page-components/BuildPanel/BuildPanel'
 
@@ -27,7 +29,6 @@ const Calculator: FC = () => {
 	}, [])
 
 	useEffect(() => {
-		console.log('selectedFigure', selectedFigure)
 		if (selectedFigure === FIGURES.Square) {
 			dispatch(
 				changeFigureSides({
@@ -40,8 +41,8 @@ const Calculator: FC = () => {
 		} else if (selectedFigure === FIGURES.Rectangle) {
 			dispatch(
 				changeFigureSides({
-					figureASide: Number(9),
-					figureBSide: Number(5),
+					figureASide: Number(4),
+					figureBSide: Number(2),
 					figureCSide: Number(0),
 					figureDSide: Number(0),
 				})
@@ -50,11 +51,22 @@ const Calculator: FC = () => {
 			dispatch(
 				changeFigureSides({
 					figureASide: Number(10),
-					figureBSide: Number(3),
-					figureCSide: Number(6),
-					// figureDSide: Number(5),
+					figureBSide: Number(6),
+					figureCSide: Number(0),
 					figureDSide: Number(0),
+					figureHSide: Number(4),
+					// figureCSide: Number(13),
+					// figureDSide: Number(5),
+					// figureHSide: Number(14),
 				})
+
+				// changeFigureSides({
+				// 	figureASide: Number(10),
+				// 	figureBSide: Number(3),
+				// 	figureCSide: Number(6),
+				// 	// figureDSide: Number(5),
+				// 	figureDSide: Number(0),
+				// })
 			)
 		} else if (selectedFigure === FIGURES.Triangular) {
 			dispatch(
@@ -104,8 +116,10 @@ const Calculator: FC = () => {
 					</div>
 					<SidePanel />
 				</div>
-
-				<RoofStage />
+				<div className={styles.main}>
+					{/* <RoofStage /> */}
+					<StageDev />
+				</div>
 			</div>
 		</div>
 	)

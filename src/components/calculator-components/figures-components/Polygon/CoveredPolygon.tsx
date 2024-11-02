@@ -93,8 +93,6 @@ const CoveredPolygon: FC<Props> = ({
 		if (scaledCoords?.length > 1) {
 			let coords = recalcCoords().slice()
 
-			console.log('recalcCoords: ', recalcCoords())
-
 			let zoomKoef = 1
 
 			let step1 = (420 * zoomKoef) / 10

@@ -30,6 +30,7 @@ export const settingsSlice = createSlice({
 			state.isBuildMode = action.payload
 		},
 		setSelectedScale: (state, action: PayloadAction<number>) => {
+			console.log(action.payload)
 			state.selectedScale = action.payload
 		},
 	},

@@ -5,33 +5,33 @@ export function Usesize1StartCoords() {
     const { appState, dispatch } = useContext(AppContext);
     const { startCoords } = appState || {};
 
-    useEffect(() => {
-        if (window.innerWidth >= 1920) {
-            dispatch(
-            {
-                startCoords: {
-                    x: 100,
-                    y: 100,
-                },
-            })
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (window.innerWidth >= 1920) {
+    //         dispatch(
+    //         {
+    //             startCoords: {
+    //                 x: 100,
+    //                 y: 100,
+    //             },
+    //         })
+    //     }
+    // }, []);
 
-    return startCoords;
+    // return startCoords;
 }
 
 export function UseFullStartCoords() {
     const { appState, dispatch } = useContext(AppContext);
     const { startCoords } = appState || {};
 
-    useEffect(() => {
-        if (window.innerWidth >= 1280 && window.innerWidth < 1920) {
-            dispatch({startCoords: {
-                    x: 50,
-                    y: 50,
-                }});
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (window.innerWidth >= 1280 && window.innerWidth < 1920) {
+    //         dispatch({startCoords: {
+    //                 x: 50,
+    //                 y: 50,
+    //             }});
+    //     }
+    // }, []);
 
     return startCoords;
 }
@@ -44,14 +44,14 @@ export function UseFigureSides() {
 
     const { figureSides } = appState || {};
 
-    useEffect(() => {
-        dispatch({startCoords: {
-            figureASide: 100,
-            figureBSide: 100,
-            figureCSide: 100,
-            figureDSide: 100,
-        }});
-    }, []);
+    // useEffect(() => {
+    //     dispatch({startCoords: {
+    //         figureASide: 100,
+    //         figureBSide: 100,
+    //         figureCSide: 100,
+    //         figureDSide: 100,
+    //     }});
+    // }, []);
 
     return figureSides;
 }

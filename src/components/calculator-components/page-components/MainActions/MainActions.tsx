@@ -17,59 +17,18 @@ const MainActions: FC = () => {
 	const { selectedScale } = useSelector((state: any) => state.settings)
 
 	function zoomInBtnHandler(e: any) {
-		if (selectedScale <= 1) {
+		if (selectedScale >= 1.2) {
 			return
 		}
-
-		const width = window.innerWidth
-		let defaultGridConfig: IGridConfig | null = null
-		let createdScale = `scale${selectedScale - 1}`
-
-		dispatch(setSelectedScale(selectedScale - 1))
-
-		if (width >= 1920) {
-			defaultGridConfig = gridParams.size1[createdScale]
-		} else if (width < 1920 && width >= 1366) {
-			defaultGridConfig = gridParams.size2[createdScale]
-		} else if (width < 1366 && width >= 1000) {
-			defaultGridConfig = gridParams.size3[createdScale]
-		} else if (width < 999) {
-			defaultGridConfig = gridParams.size4[createdScale]
-		}
-
-		appContext.dispatch({
-			type: 'set-default-grid-config',
-			payload: { gridConfig: defaultGridConfig },
-		})
+		dispatch(setSelectedScale(selectedScale + 0.1))
 	}
 
 	function zoomOutBtnHandler(e: any) {
-		const width = window.innerWidth
-
-		if (selectedScale >= 3) {
+		if (selectedScale <= 0.4) {
 			return
 		}
 
-		let defaultGridConfig: IGridConfig | null = null
-
-		let createdScale = `scale${selectedScale + 1}`
-
-		dispatch(setSelectedScale(selectedScale + 1))
-
-		if (width >= 1920) {
-			defaultGridConfig = gridParams.size1[createdScale]
-		} else if (width < 1920 && width >= 1366) {
-			defaultGridConfig = gridParams.size2[createdScale]
-		} else if (width < 1366 && width >= 1000) {
-			defaultGridConfig = gridParams.size3[createdScale]
-		} else if (width < 999) {
-			defaultGridConfig = gridParams.size4[createdScale]
-		}
-
-		appContext.dispatch({
-			type: 'set-default-grid-config',
-			payload: { gridConfig: defaultGridConfig },
-		})
+		dispatch(setSelectedScale(selectedScale - 0.1))
 	}
 
 	function removeActionsBtnHandler(e: any) {

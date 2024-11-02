@@ -6,42 +6,39 @@ import { Layer, Line, Text } from 'react-konva'
 import { scalesConfig } from '../../../../data'
 import { AppContext } from '../../../../context/AppContext'
 import { useSelector, useDispatch } from 'react-redux'
+import { useGridConfig } from '../../../../hooks/useGridConfig'
 
 interface Props {
-	cellSize: number
-	gridHeight: number
 	gridHorizontalNumbers: number
 	gridVerticalNumbers: number
 }
 
-const GridNumbers: FC<Props> = ({
-	cellSize,
-	gridHeight,
-	gridHorizontalNumbers,
-	gridVerticalNumbers,
-}) => {
+const GridNumbers: FC<Props> = ({}) => {
 	const appContext = useContext(AppContext)
 	const { selectedFigure, selectedScale } = useSelector(
 		(state: any) => state.settings
 	)
+	const gridConfig = useGridConfig()
 
 	function createCellNumber() {
-		let step = cellSize
+		const horizontalLines = Math.floor(
+			gridConfig?.height / gridConfig?.cellSize
+		)
+		const verticalLines = Math.floor(gridConfig?.width / gridConfig?.cellSize)
 
+		let step = gridConfig?.cellSize
 		let arr = []
-		let x = 0
-		let y = 0
 
-		for (let i = 0; i < 50; i++) {
-			x += step
-			let newX = x
+		let x = gridConfig?.startCoords.x - gridConfig?.cellSize
+		let y = gridConfig?.startCoords.y - gridConfig?.cellSize
+
+		for (let i = 0; i < verticalLines; i++) {
 			arr.push(
 				<Text
 					text={i.toString()}
-					key={1000 + i}
-					x={newX}
-					// offsetX={-appContext.state.gridConfig.cellSize}
-					y={-gridHeight / scalesConfig[`${selectedScale}`] + 10}
+					key={'vertical__' + i}
+					x={(x += step)}
+					y={y + 10}
 					scaleY={-1}
 					fill={'red'}
 					width={100}
@@ -49,17 +46,18 @@ const GridNumbers: FC<Props> = ({
 			)
 		}
 
-		for (let i = 0; i < 50; i++) {
-			y += step
-			let newY = y
+		x = gridConfig?.startCoords.x - gridConfig?.cellSize
+		y = gridConfig?.startCoords.y - gridConfig?.cellSize
+
+		for (let i = 0; i < horizontalLines; i++) {
 			arr.push(
 				<Text
 					text={i.toString()}
-					key={10000 + i}
-					x={0}
+					key={'horizontal__' + i}
+					x={x}
 					scaleY={-1}
 					fill={'red'}
-					y={-gridHeight / scalesConfig[`${selectedScale}`] + newY}
+					y={(y += step)}
 					width={100}
 				/>
 			)

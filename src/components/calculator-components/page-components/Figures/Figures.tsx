@@ -25,8 +25,6 @@ export const Figures: FC<Props> = ({ onChooseFigure }) => {
 
 	const { selectedFigure } = useSelector((state: any) => state.settings)
 
-	console.log('selectedFigure: ', selectedFigure)
-
 	return (
 		<div className={styles.infoBlock}>
 			<div className={styles.container}>
@@ -65,7 +63,7 @@ export const Figures: FC<Props> = ({ onChooseFigure }) => {
 							alt='Прямокутник'
 						/>
 					</button>
-					<button
+					{/* <button
 						className={clsx(
 							styles.figureButton,
 							selectedFigure === FIGURES.Trapezoid ? styles.activeFigure : ''
@@ -125,7 +123,7 @@ export const Figures: FC<Props> = ({ onChooseFigure }) => {
 						onClick={onChooseFigure.bind(this)}
 					>
 						Не вибрано
-					</button>
+					</button> */}
 				</div>
 			</div>
 		</div>
