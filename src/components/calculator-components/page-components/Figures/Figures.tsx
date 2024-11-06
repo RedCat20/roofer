@@ -63,7 +63,7 @@ export const Figures: FC<Props> = ({ onChooseFigure }) => {
 							alt='Прямокутник'
 						/>
 					</button>
-					{/* <button
+					<button
 						className={clsx(
 							styles.figureButton,
 							selectedFigure === FIGURES.Trapezoid ? styles.activeFigure : ''
@@ -123,7 +123,7 @@ export const Figures: FC<Props> = ({ onChooseFigure }) => {
 						onClick={onChooseFigure.bind(this)}
 					>
 						Не вибрано
-					</button> */}
+					</button>
 				</div>
 			</div>
 		</div>

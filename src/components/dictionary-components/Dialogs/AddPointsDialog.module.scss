@@ -22,5 +22,9 @@
 		border-radius: 5px;
 		color: #000;
 		text-align: right;
+		&[disabled] {
+			color: white;
+			font-weight: bold;
+		}
 	}
 }

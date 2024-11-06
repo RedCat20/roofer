@@ -6,7 +6,11 @@ import {
 	setEditedMode,
 	setIsBuildMode,
 } from '../../../store/settingSlice'
-import { changeFigureSides } from '../../../store/figureParamsSlice'
+import {
+	changeCustomPoints,
+	changeFigurePoints,
+	changeFigureSides,
+} from '../../../store/figureParamsSlice'
 
 import RoofStage from '../roof-components/RoofStage/RoofStage'
 import StageDev from '../roof-dev/StageDev/StageDev'
@@ -22,31 +26,78 @@ const Calculator: FC = () => {
 	const { selectedFigure } = useSelector((state: any) => state.settings)
 	const { dictionaries } = useSelector((state: any) => state.dictionaries)
 
-	useEffect(() => {
-		dispatch(setEditedMode(0))
-		dispatch(setIsBuildMode(false))
-		dispatch(setSelectedFigure(FIGURES.None))
-	}, [])
+	const clearData = () => {
+		Promise.all([
+			// dispatch(setEditedMode(0)),
+			// dispatch(setIsBuildMode(false)),
+			// dispatch(setSelectedFigure(FIGURES.None)),
+			dispatch(
+				changeFigureSides({
+					figureASide: 0,
+					figureBSide: 0,
+					figureCSide: 0,
+					figureDSide: 0,
+					figureHSide: 0,
+				})
+			),
+			dispatch(
+				changeFigurePoints([
+					[0, 0],
+					[0, 0],
+					[0, 0],
+					[0, 0],
+				])
+			),
+			dispatch(changeCustomPoints([])),
+		])
+	}
 
 	useEffect(() => {
+		clearData()
+
 		if (selectedFigure === FIGURES.Square) {
-			dispatch(
-				changeFigureSides({
-					figureASide: Number(5),
-					figureBSide: Number(0),
-					figureCSide: Number(0),
-					figureDSide: Number(0),
-				})
-			)
+			const defaultFigureASide = 4
+			Promise.all([
+				dispatch(
+					changeFigureSides({
+						figureASide: Number(defaultFigureASide),
+						figureBSide: Number(0),
+						figureCSide: Number(0),
+						figureDSide: Number(0),
+						figureHSide: Number(0),
+					})
+				),
+				dispatch(
+					changeFigurePoints([
+						[0, 0],
+						[defaultFigureASide, 0],
+						[defaultFigureASide, defaultFigureASide],
+						[0, defaultFigureASide],
+					])
+				),
+			])
 		} else if (selectedFigure === FIGURES.Rectangle) {
-			dispatch(
-				changeFigureSides({
-					figureASide: Number(4),
-					figureBSide: Number(2),
-					figureCSide: Number(0),
-					figureDSide: Number(0),
-				})
-			)
+			const defaultFigureASide = 6
+			const defaultFigureBSide = 4
+			Promise.all([
+				dispatch(
+					changeFigureSides({
+						figureASide: Number(defaultFigureASide),
+						figureBSide: Number(defaultFigureBSide),
+						figureCSide: Number(0),
+						figureDSide: Number(0),
+						figureHSide: Number(0),
+					})
+				),
+				dispatch(
+					changeFigurePoints([
+						[0, 0],
+						[defaultFigureASide, 0],
+						[defaultFigureASide, defaultFigureBSide],
+						[0, defaultFigureBSide],
+					])
+				),
+			])
 		} else if (selectedFigure === FIGURES.Trapezoid) {
 			dispatch(
 				changeFigureSides({
@@ -77,28 +128,50 @@ const Calculator: FC = () => {
 					//figureCSide: Number(6.6555),
 					figureCSide: Number(6),
 					figureDSide: Number(0),
+					figureHSide: Number(0),
 				})
 			)
-		} else if (selectedFigure === FIGURES.Polygon) {
-			dispatch(
-				changeFigureSides({
-					figureASide: Number(0),
-					figureBSide: Number(0),
-					figureCSide: Number(0),
-					figureDSide: Number(0),
-				})
-			)
-		} else if (selectedFigure === FIGURES.None) {
-			dispatch(
-				changeFigureSides({
-					figureASide: Number(0),
-					figureBSide: Number(0),
-					figureCSide: Number(0),
-					figureDSide: Number(0),
-				})
-			)
-			dispatch(setEditedMode(0))
-			dispatch(setIsBuildMode(false))
+		} else if ([FIGURES.Polygon].includes(selectedFigure)) {
+			Promise.all([
+				dispatch(
+					changeFigureSides({
+						figureASide: Number(0),
+						figureBSide: Number(0),
+						figureCSide: Number(0),
+						figureDSide: Number(0),
+						figureHSide: Number(0),
+					})
+				),
+				changeCustomPoints([
+					[0, 0],
+					[1, 0],
+					[0, 1],
+				]),
+			])
+		} else if ([FIGURES.None].includes(selectedFigure)) {
+			Promise.all([
+				dispatch(
+					changeFigureSides({
+						figureASide: Number(0),
+						figureBSide: Number(0),
+						figureCSide: Number(0),
+						figureDSide: Number(0),
+						figureHSide: Number(0),
+					})
+				),
+				changeFigurePoints([
+					[0, 0],
+					[0, 0],
+					[0, 0],
+					[0, 0],
+				]),
+			])
+		} else {
+			Promise.all([
+				dispatch(setEditedMode(0)),
+				dispatch(setIsBuildMode(false)),
+				dispatch(setSelectedFigure(FIGURES.None)),
+			])
 		}
 	}, [selectedFigure])
 

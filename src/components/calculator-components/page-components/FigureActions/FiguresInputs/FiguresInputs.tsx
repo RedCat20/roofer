@@ -3,7 +3,13 @@ import { AppContext } from '../../../../../context/AppContext'
 import { FIGURES } from '../../../../../enums/figure.enum'
 import styles from './FiguresInputs.module.scss'
 import { useSelector, useDispatch } from 'react-redux'
-import { changeFigureSides } from '../../../../../store/figureParamsSlice'
+import {
+	changeFigureSides,
+	changeFigurePoints,
+} from '../../../../../store/figureParamsSlice'
+
+import { setNewSquareParamsBySides } from '../../../../../helpers/set.new.square.params'
+import { setNewRectangleParamsBySides } from '../../../../../helpers/set.new.rectangle.params'
 
 interface Props {}
 
@@ -17,19 +23,72 @@ export const FiguresInputs: FC<Props> = ({}) => {
 	)
 
 	function onChangeFigureASideHandler(e: any) {
-		dispatch(
-			changeFigureSides({
-				figureASide: e.target.value,
-			})
-		)
+		switch (selectedFigure) {
+			case FIGURES.Square: {
+				{
+					const newFigureASide = e.target.value
+					setNewSquareParamsBySides({
+						newData: {
+							value: newFigureASide,
+						},
+						storeData: {
+							dispatch,
+							figureSides,
+							changeFigureSides,
+							changeFigurePoints,
+						},
+					})
+				}
+				break
+			}
+			case FIGURES.Rectangle: {
+				{
+					const newFigureASide = e.target.value
+					setNewRectangleParamsBySides({
+						newData: {
+							sideA: newFigureASide,
+							sideB: figureSides.figureBSide,
+						},
+						storeData: {
+							dispatch,
+							figureSides,
+							changeFigureSides,
+							changeFigurePoints,
+						},
+					})
+				}
+				break
+			}
+		}
 	}
 
 	function onChangeFigureBSideHandler(e: any) {
-		dispatch(
-			changeFigureSides({
-				figureBSide: e.target.value,
-			})
-		)
+		switch (selectedFigure) {
+			case FIGURES.Rectangle: {
+				{
+					const newFigureBSide = e.target.value
+					setNewRectangleParamsBySides({
+						newData: {
+							sideA: figureSides.figureASide,
+							sideB: newFigureBSide,
+						},
+						storeData: {
+							dispatch,
+							figureSides,
+							changeFigureSides,
+							changeFigurePoints,
+						},
+					})
+				}
+				break
+			}
+		}
+
+		// dispatch(
+		// 	changeFigureSides({
+		// 		figureBSide: e.target.value,
+		// 	})
+		// )
 	}
 
 	function onChangeFigureCSideHandler(e: any) {
@@ -138,10 +197,7 @@ export const FiguresInputs: FC<Props> = ({}) => {
 					type='number'
 					value={figureSides.figureHSide}
 					onChange={onChangeFigureHSideHandler.bind(this)}
-					disabled={
-						editedMode > 1 ||
-						selectedFigure !== FIGURES.Trapezoid
-					}
+					disabled={editedMode > 1 || selectedFigure !== FIGURES.Trapezoid}
 				/>
 				<span>m</span>
 			</div>

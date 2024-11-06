@@ -4,6 +4,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 export interface DictionaryState {
 	figureSides: any
 	figurePoints: any
+	customPoints: any
 }
 
 const initialState: DictionaryState = {
@@ -15,11 +16,16 @@ const initialState: DictionaryState = {
 		figureHSide: 0,
 	},
 	figurePoints: [
-		{ x0: 0, y0: 0 },
-		{ x1: 0, y1: 0 },
-		{ x2: 0, y2: 0 },
-		{ x3: 0, y3: 0 },
+		[0, 0],
+		[0, 0],
+		[0, 0],
+		[0, 0],
+		// { x0: 0, y0: 0 },
+		// { x1: 0, y1: 0 },
+		// { x2: 0, y2: 0 },
+		// { x3: 0, y3: 0 },
 	],
+	customPoints: [],
 }
 
 export const figureParamsSlice = createSlice({
@@ -63,10 +69,13 @@ export const figureParamsSlice = createSlice({
 			// 	{ x6: 0, y6: 0 },
 			// ]
 		},
+		changeCustomPoints: (state, action: PayloadAction<any>) => {
+			state.customPoints = action.payload
+		},
 	},
 })
 
-export const { changeFigureSides, changeFigurePoints } =
+export const { changeFigureSides, changeFigurePoints, changeCustomPoints } =
 	figureParamsSlice.actions
 
 export default figureParamsSlice.reducer

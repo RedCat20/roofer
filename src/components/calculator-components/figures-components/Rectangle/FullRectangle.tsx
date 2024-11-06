@@ -24,16 +24,16 @@ const FullRectangle: FC<Props> = ({ width, height, gridConfig }) => {
 	const { selectedScale } = useSelector((state: any) => state.settings)
 	const { startCoords, cellSize } = gridConfig
 
-	useEffect(() => {
-		dispatch(
-			changeFigurePoints([
-				{ x0: 0, y0: 0 },
-				{ x1: width * cellSize, y1: 0 },
-				{ x2: 0, y2: 0 },
-				{ x3: 0, y3: 0 },
-			])
-		)
-	}, [])
+	// useEffect(() => {
+	// 	dispatch(
+	// 		changeFigurePoints([
+	// 			[0, 0],
+	// 			[figureSides?.figureASide * cellSize, 0],
+	// 			[0, 0],
+	// 			[0, 0],
+	// 		])
+	// 	)
+	// }, [])
 
 	return (
 		<Layer>

@@ -15,6 +15,7 @@ import styles from './StageDev.module.scss'
 
 import SquareContainer from '../Square/SquareContainer'
 import RectangleContainer from '../Rectangle/SquareContainer'
+import PolygonContainer from '../Polygon/PolygonContainer'
 
 import EditedPanel from '../EditedPanel/EditedPanel'
 import CalcResult from '../CalcResult/CalcResult'
@@ -97,7 +98,7 @@ const StageDev: FC<Props> = () => {
 											</AppContext.Provider>
 										)}
 
-										{/* Квадрат /*/}
+										{/* Прямокутник /*/}
 										{selectedFigure === 2 && (
 											<AppContext.Provider value={{ state, dispatch }}>
 												<RectangleContainer
@@ -106,6 +107,23 @@ const StageDev: FC<Props> = () => {
 													}
 													selectedRectangleId={selectedRectangleId}
 													setCalcResult={setCalcResult}
+												/>
+											</AppContext.Provider>
+										)}
+
+										{/* Кастомна фігура /*/}
+										{selectedFigure === 5 && (
+											<AppContext.Provider value={{ state, dispatch }}>
+												<PolygonContainer
+													setCalcResult={setCalcResult}
+													// setCalcResult={setCalcResult}
+													// clickedCoords={clickedCoords}
+													// polygonCoords={polygonCoords}
+													// setSelectedPolygonId={setSelectedPolygonId}
+													// setNewSidesCallback={setNewSides}
+													// calcPolygonPointsCallback={calcFigurePoints}
+													// selectedPolygonShapeName={selectedPolygonShapeName}
+													// selectedPolygonId={selectedPolygonId}
 												/>
 											</AppContext.Provider>
 										)}
