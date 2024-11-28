@@ -1,25 +1,24 @@
 // @ts-nocheck
 
-import React, { FC, useState, useEffect } from 'react'
+import React, { FC, useContext, useEffect, useState } from 'react'
 import { Circle, Layer, Line } from 'react-konva'
-import { useGridConfig } from '../../../../hooks/useGridConfig'
+import { scalesConfig } from '../../../../data'
 import { useSelector, useDispatch } from 'react-redux'
+
+import { useGridConfig } from '../../../../hooks/useGridConfig'
 import {
 	changeCustomPoints,
 	changeFigurePoints,
 	changeFigureSides,
 } from '../../../../store/figureParamsSlice'
 
-interface Props {
-	customPoints: any[]
-	// calcPolygonPointsCallback: (coords: any[]) => void
-}
+interface Props {}
 
-const EditedPointedPolygon: FC<Props> = ({
-	customPoints,
-	// calcPolygonPointsCallback,
-}) => {
+const EditedPointedPolygon: FC<Props> = ({}) => {
 	const [builtCustomPoints, setBuiltCustomPoints] = useState([])
+	const { figureSides, figurePoints: customPoints } = useSelector(
+		(state: any) => state.figureParams
+	)
 
 	const [lines, setLines] = useState<number[]>([])
 
@@ -29,6 +28,8 @@ const EditedPointedPolygon: FC<Props> = ({
 	const dispatch = useDispatch()
 
 	const [coords, setCoords] = useState([])
+
+	console.log('customPoints', customPoints)
 
 	useEffect(() => {
 		if (customPoints?.length && gridConfig) {
@@ -132,7 +133,7 @@ const EditedPointedPolygon: FC<Props> = ({
 			]),
 		]
 
-		dispatch(changeCustomPoints(newArray))
+		dispatch(changeFigurePoints(newArray))
 
 		// calcPolygonPointsCallback(dragedPoints)
 

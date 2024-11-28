@@ -7,34 +7,85 @@ import { Stage } from 'react-konva'
 import { setSelectedScale } from '../../../../store/settingSlice'
 import { useGridConfig } from '../../../../hooks/useGridConfig'
 
-import { AppContext } from '../../../../context/AppContext'
-import { StageConsumer } from '../../../../context/StageConsumer'
-
 import CanvasGridContainer from '../Grid/CanvasGridContainer'
 import styles from './StageDev.module.scss'
 
 import SquareContainer from '../Square/SquareContainer'
 import RectangleContainer from '../Rectangle/SquareContainer'
 import PolygonContainer from '../Polygon/PolygonContainer'
+import TriangleContainer from '../Triangle/TriangleContainer'
 
 import EditedPanel from '../EditedPanel/EditedPanel'
 import CalcResult from '../CalcResult/CalcResult'
 import { FIGURES } from '../../../../enums/figure.enum'
 
+import { changeCustomPoints } from '../../../../store/figureParamsSlice'
+
 interface Props {}
 
 const StageDev: FC<Props> = () => {
 	const gridConfig = useGridConfig()
-	const appContext = useContext(AppContext)
+
+	const dispatch = useDispatch()
 
 	const { editedMode, isBuildMode, selectedScale, selectedFigure } =
 		useSelector((state: any) => state.settings)
 
+	const { customPoints } = useSelector((state: any) => state.figureParams)
+
 	const onMouseDownHandler = (e: any) => {}
+
 	const onMouseMoveHandler = (e: any) => {}
+
 	const onTouchStartHandler = (e: any) => {}
-	const onStageClickHandler = (e: any) => {}
-	const onStageTapHandler = (e: any) => {}
+
+	const onStageClickHandler = (e: any) => {
+		// Click and tap on stage
+		let stage = e.target.getStage()
+		const pointerPosition = stage.getPointerPosition()
+
+		const { cellSize, height, startCoords } = gridConfig
+		let arr = [...customPoints]
+		let figureBottomLine = startCoords[1]
+
+		console.log('!!! pointerPosition: ', pointerPosition)
+
+		if (selectedFigure === FIGURES.Polygon && editedMode === 1) {
+			arr.push([
+				(pointerPosition.x - startCoords[0]) / cellSize,
+				(-1 * (pointerPosition.y - startCoords[1])) / cellSize,
+			])
+			console.log('new array: ', [...arr])
+			dispatch(changeCustomPoints([...arr]))
+		}
+
+		// dispatch(
+		// 	changeCustomPoints([
+		// 		[1, 1],
+		// 		[2, 2],
+		// 		[2, 1],
+		// 	])
+		// )
+	}
+
+	const onStageTapHandler = (e: any) => {
+		/// Click and tap on stage
+		let stage = e.target.getStage()
+		const pointerPosition = stage.getPointerPosition()
+
+		const { cellSize, height, startCoords } = gridConfig
+		let arr = [...customPoints]
+		let figureBottomLine = startCoords[1]
+		console.log('pointerPosition: ', pointerPosition)
+
+		if (selectedFigure === FIGURES.Polygon) {
+			arr.push([
+				startCoords[0] + pointerPosition.x / (cellSize * cellSize),
+				startCoords[1] - pointerPosition.y / (cellSize * cellSize),
+			])
+			dispatch(changeCustomPoints([...arr]))
+		}
+	}
 
 	const [selectedSquareId, setSelectedSquareId] = useState(null)
 	const [selectedRectangleId, setSelectedRectangleId] = useState(null)
@@ -59,6 +110,8 @@ const StageDev: FC<Props> = () => {
 
 	const { figureSides } = useSelector((state: any) => state.figureParams)
 
+	console.log('selectedScale: ', selectedScale)
+
 	return (
 		<>
 			{gridConfig ? (
@@ -67,69 +120,47 @@ const StageDev: FC<Props> = () => {
 
 					<div className={styles.gridWrapper} id='grid'>
 						{selectedScale && (
-							<StageConsumer>
-								{({ state, dispatch }: { state: any; dispatch: any }) => (
-									<Stage
-										scaleX={+1}
-										scaleY={+1}
-										width={gridConfig?.width}
-										height={gridConfig?.height}
-										// onMouseDown={onMouseDownHandler}
-										// onMouseMove={onMouseMoveHandler}
-										// onTouchStart={onTouchStartHandler}
-										// onClick={onStageClickHandler}
-										// onTap={onStageTapHandler}
-									>
-										{/* Сітка /*/}
-										<AppContext.Provider value={{ state, dispatch }}>
-											<CanvasGridContainer />
-										</AppContext.Provider>
+							<Stage
+								scaleX={+1}
+								scaleY={+1}
+								width={gridConfig?.width}
+								height={gridConfig?.height}
+								onClick={onStageClickHandler}
+								onTap={onStageTapHandler}
+							>
+								{/* Сітка /*/}
+								<CanvasGridContainer />
 
-										{/* Квадрат /*/}
-										{selectedFigure === 1 && (
-											<AppContext.Provider value={{ state, dispatch }}>
-												<SquareContainer
-													setSelectedSquareIdCallback={
-														setSelectedSquareIdHandler
-													}
-													selectedSquareId={selectedSquareId}
-													setCalcResult={setCalcResult}
-												/>
-											</AppContext.Provider>
-										)}
-
-										{/* Прямокутник /*/}
-										{selectedFigure === 2 && (
-											<AppContext.Provider value={{ state, dispatch }}>
-												<RectangleContainer
-													setSelectedRectangleIdCallback={
-														setSelectedRectangleIdHandler
-													}
-													selectedRectangleId={selectedRectangleId}
-													setCalcResult={setCalcResult}
-												/>
-											</AppContext.Provider>
-										)}
-
-										{/* Кастомна фігура /*/}
-										{selectedFigure === 5 && (
-											<AppContext.Provider value={{ state, dispatch }}>
-												<PolygonContainer
-													setCalcResult={setCalcResult}
-													// setCalcResult={setCalcResult}
-													// clickedCoords={clickedCoords}
-													// polygonCoords={polygonCoords}
-													// setSelectedPolygonId={setSelectedPolygonId}
-													// setNewSidesCallback={setNewSides}
-													// calcPolygonPointsCallback={calcFigurePoints}
-													// selectedPolygonShapeName={selectedPolygonShapeName}
-													// selectedPolygonId={selectedPolygonId}
-												/>
-											</AppContext.Provider>
-										)}
-									</Stage>
+								{/* Квадрат /*/}
+								{selectedFigure === 1 && (
+									<SquareContainer
+										setSelectedSquareIdCallback={setSelectedSquareIdHandler}
+										selectedSquareId={selectedSquareId}
+										setCalcResult={setCalcResult}
+									/>
 								)}
-							</StageConsumer>
+
+								{/* Прямокутник /*/}
+								{selectedFigure === 2 && (
+									<RectangleContainer
+										setSelectedRectangleIdCallback={
+											setSelectedRectangleIdHandler
+										}
+										selectedRectangleId={selectedRectangleId}
+										setCalcResult={setCalcResult}
+									/>
+								)}
+
+								{/* Трикутник /*/}
+								{selectedFigure === 4 && (
+									<TriangleContainer setCalcResult={setCalcResult} />
+								)}
+
+								{/* Кастомна фігура /*/}
+								{selectedFigure === 5 && (
+									<PolygonContainer setCalcResult={setCalcResult} />
+								)}
+							</Stage>
 						)}
 					</div>
 

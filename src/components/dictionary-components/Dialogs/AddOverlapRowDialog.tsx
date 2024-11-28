@@ -47,10 +47,10 @@ const AddOverlapRowDialog: FC<IAddTableRowDialogProps> = ({
 						</button>
 						<div className='right'>
 							<div className='header'>
-								<div>Додати нахлест (в мм)</div>
+								<div>Add overlap row (mm)</div>
 							</div>
 							<div>
-								<div className='label'>Загальна ширина нахлесту</div>
+								<div className='label'>General overlap width</div>
 								<input
 									type='number'
 									value={generalOverlap}
@@ -61,7 +61,7 @@ const AddOverlapRowDialog: FC<IAddTableRowDialogProps> = ({
 							</div>
 
 							<div>
-								<div className='label'>Корисна ширина нахлесту</div>
+								<div className='label'>Useful overlap width</div>
 								<input
 									value={usefulOverlap}
 									type='number'
@@ -72,7 +72,7 @@ const AddOverlapRowDialog: FC<IAddTableRowDialogProps> = ({
 							</div>
 
 							<div>
-								<div className='label'>Нахлест</div>
+								<div className='label'>Overlap</div>
 								<input
 									style={{ background: '#efefef' }}
 									type='number'
@@ -81,14 +81,7 @@ const AddOverlapRowDialog: FC<IAddTableRowDialogProps> = ({
 								/>
 							</div>
 
-							<button
-								className='save'
-								onClick={e => {
-									// onCreateOverlap()
-								}}
-							>
-								Створити
-							</button>
+							<button className='save' disabled>`Create`</button>
 						</div>
 					</div>
 				</div>

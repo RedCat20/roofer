@@ -1,5 +1,5 @@
 .mainActions {
-	padding: 0 0 5px 0;
+	padding: 5px 10px 5px 10px;
 	display: grid;
 	grid-template-columns: repeat(6, auto);
 	grid-column-gap: 10px;
@@ -27,8 +27,8 @@
 	}
 
 	.userActionButton {
-		width: 40px;
-		height: 40px;
+		width: 35px;
+		height: 35px;
 		align-self: center;
 		display: flex;
 		align-items: center;

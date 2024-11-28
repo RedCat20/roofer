@@ -5,7 +5,6 @@ import styles from './Table.module.scss'
 import { useLocation } from 'react-router-dom'
 
 import plusImg from '../../../images/plus.png'
-import { AppContext } from '../../../context/AppContext'
 import AddTableRowDialog from '../Dialogs/AddTableRowDialog'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -16,7 +15,6 @@ interface ICategoryParams {
 }
 
 const Table: FC = () => {
-	const appContext = useContext(AppContext)
 	let location = useLocation()
 
 	const [activeCategory, setActiveCategory] = useState(null)
@@ -26,9 +24,6 @@ const Table: FC = () => {
 	useEffect(() => {
 		if (location) {
 			let urlCategoryId = location.pathname.split('=')[1]
-			// let result = appContext.state.dictionary.find(
-			// 	item => item.id.toString() === urlCategoryId
-			// )
 			let result = categories.find(item => item.id.toString() === urlCategoryId)
 			setActiveCategory(result)
 		}
@@ -192,15 +187,15 @@ const Table: FC = () => {
 
 	return (
 		<div className={styles.container}>
-			<h1>Листи</h1>
+			<h1>Sheets</h1>
 			<div>
 				<table>
 					<thead>
 						<tr>
-							<th>Не виготовляється</th>
-							<th>Рекомендовані довжини</th>
-							<th>Виготовляється</th>
-							<th>Дії</th>
+							<th>Exceptions</th>
+							<th>Recommended</th>
+							<th>Made</th>
+							<th>Actions</th>
 							<th>
 								<div
 									onClick={e => setModalLength(true)}

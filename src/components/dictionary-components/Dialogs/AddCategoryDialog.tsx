@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import { FC, useState } from 'react'
 import styles from './AddCategoryDialog.module.scss'
 
 interface IAddTableRowDialogProps {
@@ -10,36 +10,8 @@ interface IAddTableRowDialogProps {
 const AddCategoryDialog: FC<IAddTableRowDialogProps> = ({
 	modalCategory,
 	setModalCategory,
-	onCreateCategoryCallback,
 }) => {
-	const [selectedFile, setSelectedFile] = useState(undefined)
 	const [name, setName] = useState('')
-
-	function onCreateCategory() {
-		let obj = {
-			selectedFile: selectedFile,
-			name: name,
-		}
-		onCreateCategoryCallback(obj)
-	}
-
-	const onSelectFile = (e: any) => {
-		if (!e.target.files || e.target.files.length === 0) {
-			setSelectedFile(undefined)
-			return
-		}
-
-		var binaryData = []
-		binaryData.push(selectedFile)
-		// @ts-ignore
-		let objectUrl = window.URL.createObjectURL(
-			// @ts-ignore
-			new Blob(binaryData, { type: 'image' })
-		)
-
-		console.log('e.target.files[0]: ', e.target.files[0])
-		setSelectedFile(e.target.files[0])
-	}
 
 	return (
 		<>
@@ -57,10 +29,10 @@ const AddCategoryDialog: FC<IAddTableRowDialogProps> = ({
 							</button>
 
 							<div className={styles.right}>
-								<div className={styles.header}>Створити категорію</div>
-
+								<div className={styles.header}>Create a category</div>
+								<div className={styles.warning}>Its not possible right now</div>
 								<div className={styles.fieldset}>
-									<div className={styles.label}>Назва</div>
+									<div className={styles.label}>Name</div>
 									<input
 										type='text'
 										onChange={e => setName(e.target.value)}
@@ -69,16 +41,12 @@ const AddCategoryDialog: FC<IAddTableRowDialogProps> = ({
 								</div>
 
 								<div className={styles.fieldset}>
-									<div className={styles.label}>Фото</div>
-									<input type='file' accept='image/*' onChange={onSelectFile} />
+									<div className={styles.label}>Image</div>
+									<input type='file' title='FIle' accept='image/*' />
 								</div>
 
-								<button
-									className={styles.save}
-									// onClick={e => onCreateCategory()}
-									onClick={e => {}}
-								>
-									Створити
+								<button className={styles.save} disabled>
+									Create
 								</button>
 							</div>
 						</div>

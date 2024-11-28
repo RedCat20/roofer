@@ -63,17 +63,35 @@ export const setNewRectangleParamsBySides = ({
 			[sideA, sideB],
 			[0, sideB],
 		]
-		// const newASide = calcSideLengthByPoints([newPoints[0], newPoints[1]])
-		// const newBSide = calcSideLengthByPoints([newPoints[1], newPoints[2]])
-		// console.log('newASide: ', typeof newASide, newASide)
-		// console.log('newBSide: ', typeof newBSide, newBSide)
-
 		Promise.all([
 			dispatch(
 				changeFigureSides({
 					...figureSides,
 					figureASide: sideA,
 					figureBSide: sideB,
+				})
+			),
+			dispatch(changeFigurePoints([...newPoints])),
+		])
+	}
+}
+
+export const setNewTriangleParamsBySides = ({
+	newData: { sideA, sideB },
+	storeData: { dispatch, figureSides, changeFigureSides, changeFigurePoints },
+}: any) => {
+	if (sideA) {
+		const newPoints = [
+			[0, 0],
+			[sideA, 0],
+			[sideA, sideB],
+			[0, sideB],
+		]
+		Promise.all([
+			dispatch(
+				changeFigureSides({
+					...figureSides,
+					figureASide: sideA,
 				})
 			),
 			dispatch(changeFigurePoints([...newPoints])),

@@ -1,7 +1,6 @@
 // @ts-nocheck
 
 import React, { FC, useContext } from 'react'
-import { AppContext } from '../../../../context/AppContext'
 import clsx from 'clsx'
 import { FIGURES } from '../../../../enums/figure.enum'
 import styles from './Figures.module.scss'
@@ -21,8 +20,6 @@ interface Props {
 }
 
 export const Figures: FC<Props> = ({ onChooseFigure }) => {
-	const appContext = useContext(AppContext)
-
 	const { selectedFigure } = useSelector((state: any) => state.settings)
 
 	return (
@@ -79,7 +76,7 @@ export const Figures: FC<Props> = ({ onChooseFigure }) => {
 							src={trapezoidIcon}
 							alt='Трапеція'
 						/>
-					</button>
+					</button>*/}
 					<button
 						className={clsx(
 							styles.figureButton,
@@ -96,7 +93,7 @@ export const Figures: FC<Props> = ({ onChooseFigure }) => {
 							src={triangleIcon}
 							alt='Трикутник'
 						/>
-					</button> */}
+					</button>
 					<button
 						className={clsx(
 							styles.figureButton,
@@ -122,7 +119,7 @@ export const Figures: FC<Props> = ({ onChooseFigure }) => {
 						id='figure_0'
 						onClick={onChooseFigure.bind(this)}
 					>
-						Не вибрано
+						No figure
 					</button>
 				</div>
 			</div>

@@ -2,7 +2,6 @@
 
 import { FC, useContext, useEffect, useState } from 'react'
 import { Layer, Line, Rect } from 'react-konva'
-import { AppContext } from '../../../../context/AppContext'
 import { scalesConfig } from '../../../../data'
 import { useSelector, useDispatch } from 'react-redux'
 import { useGridConfig } from '../../../../hooks/useGridConfig'

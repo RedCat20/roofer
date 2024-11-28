@@ -5,29 +5,19 @@ import { Layer } from 'react-konva'
 import { ICoords } from '../../../../interfaces/coords'
 import TransformedSquare from './TransformedSquare'
 import { scalesConfig } from '../../../../data'
-import { AppContext } from '../../../../context/AppContext'
 import { useSelector, useDispatch } from 'react-redux'
 import { useGridConfig } from '../../../../hooks/useGridConfig'
 
 interface Props {
-	// figureWidth: number
-	// figureHeight: number
 	setSelectedCallback: (id: any) => void
 	selectedId: any
 	setNewSidesCallback: (sides: any) => void
-	// gridConfig: any
-	// startCoords: any
-	// cellSize: any
 }
 
 const TransformedSquareController: FC<Props> = ({
-	// figureWidth,
-	// figureHeight,
 	setSelectedCallback,
 	selectedId,
 	setNewSidesCallback,
-	// startCoords,
-	// cellSize,
 }) => {
 	let selectShapeHandler = (id: any) => {
 		setSelectedCallback(id)

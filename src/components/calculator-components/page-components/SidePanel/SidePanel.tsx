@@ -2,7 +2,6 @@
 
 import React, { FC, useContext } from 'react'
 import styles from './SidePanel.module.scss'
-import { AppContext } from '../../../../context/AppContext'
 import { FIGURES } from '../../../../enums/figure.enum'
 
 import squareIcon from '../../../../images/square_icon.png'
@@ -24,8 +23,6 @@ import {
 interface Props {}
 
 const SidePanel: FC<Props> = () => {
-	const appContext = useContext(AppContext)
-
 	const { selectedFigure } = useSelector((state: any) => state.settings)
 
 	const dispatch = useDispatch()
@@ -39,115 +36,8 @@ const SidePanel: FC<Props> = () => {
 		let subStrId = figureBtnId.match(re)[0]
 		let figureId = Number(subStrId)
 
-		// To switch case
-		// appContext.dispatch({
-		// 	type: 'set-selected-figure',
-		// 	payload: { selectedFigure: figureId },
-		// })
-
 		dispatch(setSelectedFigure(figureId))
 		dispatch(setEditedMode(1))
-
-		// appContext.dispatch({
-		// 	type: 'set-edited-mode',
-		// 	payload: { editedMode: 1, isEditedMode: true },
-		// })
-
-		// appContext.dispatch({
-		// 	type: 'set-build-mode',
-		// 	payload: { isBuildMode: false },
-		// })
-
-		// appContext.dispatch({
-		// 	type: 'set-clicked-coords',
-		// 	payload: { clickedCoords: null },
-		// })
-		// appContext.dispatch({
-		// 	type: 'set-polygon-coords-from-dialog',
-		// 	payload: { polygonCoords: [] },
-		// })
-
-		// To switch case
-		// switch (figureId) {
-		// 	case FIGURES.Square: {
-		// 		appContext.dispatch({
-		// 			type: 'change-figure-sides',
-		// 			payload: {
-		// 				figureASide: Number(5),
-		// 				figureBSide: Number(0),
-		// 				figureCSide: Number(0),
-		// 				figureDSide: Number(0),
-		// 			},
-		// 		})
-		// 		break
-		// 	}
-		// 	case FIGURES.Rectangle: {
-		// 		appContext.dispatch({
-		// 			type: 'change-figure-sides',
-		// 			payload: {
-		// 				// figureASide: Number(10),
-		// 				figureASide: Number(9),
-		// 				figureBSide: Number(5),
-		// 				figureCSide: Number(0),
-		// 				figureDSide: Number(0),
-		// 			},
-		// 		})
-		// 		break
-		// 	}
-		// 	case FIGURES.Trapezoid: {
-		// 		appContext.dispatch({
-		// 			type: 'change-figure-sides',
-		// 			payload: {
-		// 				figureASide: Number(10),
-		// 				figureBSide: Number(3),
-
-		// 				figureCSide: Number(6),
-		// 				//figureDSide: Number(5),
-		// 				figureDSide: Number(0),
-
-		// 				//figureDSide: 'auto',
-
-		// 				//figureCSide: Number(5),
-		// 				//figureDSide: Number(8),
-
-		// 				// figureASide: Number(10),
-		// 				// figureBSide: Number(3),
-		// 				// figureCSide: Number(6),
-		// 				// figureDSide: Number(8),
-		// 			},
-		// 		})
-		// 		break
-		// 	}
-		// 	case FIGURES.Triangular: {
-		// 		appContext.dispatch({
-		// 			type: 'change-figure-sides',
-		// 			payload: {
-		// 				figureASide: Number(10),
-		// 				//figureBSide: Number(6.6555),
-		// 				figureBSide: Number(6),
-		// 				//figureCSide: Number(6.6555),
-		// 				figureCSide: Number(6),
-		// 				figureDSide: Number(0),
-		// 			},
-		// 		})
-		// 		break
-		// 	}
-		// 	case FIGURES.Polygon: {
-		// 		appContext.dispatch({
-		// 			type: 'change-figure-sides',
-		// 			payload: {
-		// 				figureASide: Number(0),
-		// 				figureBSide: Number(0),
-		// 				figureCSide: Number(0),
-		// 				figureDSide: Number(0),
-		// 			},
-		// 		})
-		// 		break
-		// 	}
-		// 	default: {
-		// 		break
-		// 	}
-		// }
 	}
 
 	return (

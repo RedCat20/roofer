@@ -70,6 +70,7 @@ export const figureParamsSlice = createSlice({
 			// ]
 		},
 		changeCustomPoints: (state, action: PayloadAction<any>) => {
+			console.log('action.payload', action.payload)
 			state.customPoints = action.payload
 		},
 	},

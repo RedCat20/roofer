@@ -4,10 +4,10 @@ import styles from './MainPage.module.scss'
 const MainPage: FC = () => {
 	return (
 		<div className={styles.container}>
-			<h1>Головна сторінка додатку</h1>
+			<h1>The main page</h1>
 
 			<div className={styles.article}>
-				<h2>1) Інструкція по користуванню калькулятором:</h2>
+				<h2>1) Tutorial 1</h2>
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
 					officia veniam ea corrupti, accusantium enim sit soluta doloribus,
@@ -18,7 +18,7 @@ const MainPage: FC = () => {
 					magni quibusdam magnam. Dicta, aliquid perspiciatis.
 				</p>
 				<br />
-				<h2>2) Інструкція по користуванню калькулятором:</h2>
+				<h2>2) Tutorial 2</h2>
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
 					officia veniam ea corrupti, accusantium enim sit soluta doloribus,
@@ -29,7 +29,7 @@ const MainPage: FC = () => {
 					magni quibusdam magnam. Dicta, aliquid perspiciatis.
 				</p>
 				<br />
-				<h2>3) Інструкція по користуванню калькулятором:</h2>
+				<h2>3) Tutorial 3</h2>
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
 					officia veniam ea corrupti, accusantium enim sit soluta doloribus,
@@ -40,7 +40,7 @@ const MainPage: FC = () => {
 					magni quibusdam magnam. Dicta, aliquid perspiciatis.
 				</p>
 				<br />
-				<h2>4) Інструкція по користуванню калькулятором:</h2>
+				<h2>4) Tutorial 4</h2>
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
 					officia veniam ea corrupti, accusantium enim sit soluta doloribus,
@@ -51,7 +51,7 @@ const MainPage: FC = () => {
 					magni quibusdam magnam. Dicta, aliquid perspiciatis.
 				</p>
 				<br />
-				<h2>5) Інструкція по користуванню калькулятором:</h2>
+				<h2>5) Tutorial 5</h2>
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
 					officia veniam ea corrupti, accusantium enim sit soluta doloribus,
@@ -62,7 +62,7 @@ const MainPage: FC = () => {
 					magni quibusdam magnam. Dicta, aliquid perspiciatis.
 				</p>
 				<br />
-				<h2>6) Інструкція по користуванню калькулятором:</h2>
+				<h2>6) Tutorial 6</h2>
 				<p>
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
 					officia veniam ea corrupti, accusantium enim sit soluta doloribus,

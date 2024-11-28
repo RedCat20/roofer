@@ -26,7 +26,7 @@ interface Props {
 const CoveredPolygon: FC<Props> = ({ dictionaryItem, setCalcResult }) => {
 	const gridConfig = useGridConfig()
 	const { selectedScale } = useSelector((state: any) => state.settings)
-	const { customPoints: _customPoints } = useSelector(
+	const { figurePoints: _customPoints } = useSelector(
 		(state: any) => state.figureParams
 	)
 	const dispatch = useDispatch()
@@ -423,7 +423,7 @@ const CoveredPolygon: FC<Props> = ({ dictionaryItem, setCalcResult }) => {
 					strokeWidth={2}
 					stroke={'black'}
 					sceneFunc={sceneFunc.bind(this)}
-					fill="olive"
+					fill='olive'
 					opacity={0.2}
 				/>
 			</Layer>

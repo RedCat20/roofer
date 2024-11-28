@@ -10,6 +10,7 @@
 
 .mainContainer {
 	display: grid;
+	height: 100%;
 	grid-template-columns: 200px 1fr;
 	align-items: start;
 	justify-content: space-between;
@@ -59,15 +60,15 @@
 
 .aside {
 	height: 100%;
-	// margin-top: 5px;
-	// margin-bottom: 15px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 	padding: 15px;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	font-size: 24px !important;
 	font-style: italic;
-	// border-radius: 15px;
+	border-radius: 5px;
 	background: #61626b;
 }
 
@@ -76,9 +77,11 @@
 	// margin-top: 5px;
 	// margin-bottom: 15px;
 	// padding: 15px;
-	// border-radius: 15px;
+	border-radius: 5px;
 	// border: 1px solid $darkGray;
 	background: #ccc;
+
+	margin: $mainMargin;
 
 	// position: relative;
 	// top: 0;

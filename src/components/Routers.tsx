@@ -7,11 +7,9 @@ import Categories from './dictionary-components/Categories/Categories'
 import MainPage from './main-page-component/MainPage/MainPage'
 import CategoryInfo from './dictionary-components/CategoryInfo/CategoryInfo'
 
-interface Props {
-	defaultDictionaries: any[]
-}
+interface Props {}
 
-const Routers: FC<Props> = ({ defaultDictionaries = [] }) => {
+const Routers: FC<Props> = () => {
 	return (
 		<Routes>
 			<Route path='/'>

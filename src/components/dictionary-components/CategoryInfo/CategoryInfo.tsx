@@ -5,7 +5,6 @@ import styles from './CategoryInfo.module.scss'
 import { useLocation } from 'react-router-dom'
 
 import plusImg from '../../../images/plus.png'
-import { AppContext } from '../../../context/AppContext'
 import AddTableRowDialog from '../Dialogs/AddTableRowDialog'
 import Table from '../Table/Table'
 import OverlapTable from '../OverlapTable/OverlapTable'
@@ -17,20 +16,9 @@ interface ICategoryParams {
 }
 
 const CategoryInfo: FC = () => {
-	const appContext = useContext(AppContext)
 	let location = useLocation()
 
 	const [activeCategory, setActiveCategory] = useState(null)
-
-	useEffect(() => {
-		if (location) {
-			let urlCategoryId = location.pathname.split('=')[1]
-			let result = appContext.state.dictionary.find(
-				item => item.id.toString() === urlCategoryId
-			)
-			setActiveCategory(result)
-		}
-	}, [location])
 
 	const [modalLength, setModalLength] = useState<Boolean>(false)
 

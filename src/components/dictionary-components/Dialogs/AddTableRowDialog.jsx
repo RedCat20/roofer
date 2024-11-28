@@ -1,22 +1,4 @@
-import React, { FC, useState } from 'react'
-
-interface IAddTableRowDialogProps {
-	modalLength: any
-	setModalLength: any
-
-	exception: any
-	setException: any
-
-	recommended: any
-	setRecommended: any
-
-	made: any
-	setMade: any
-
-	onCreateLengthCallback: any
-}
-
-const AddTableRowDialog: FC<IAddTableRowDialogProps> = ({
+const AddTableRowDialog = ({
 	modalLength,
 	setModalLength,
 	exception,
@@ -25,16 +7,7 @@ const AddTableRowDialog: FC<IAddTableRowDialogProps> = ({
 	setRecommended,
 	made,
 	setMade,
-	onCreateLengthCallback,
 }) => {
-	function onCreateLength() {
-		onCreateLengthCallback()
-	}
-
-	{
-		/* Модалка для додавання довжин блоків певної категорії */
-	}
-
 	return (
 		<>
 			{modalLength && (
@@ -51,7 +24,7 @@ const AddTableRowDialog: FC<IAddTableRowDialogProps> = ({
 							</button>
 							<div className='right'>
 								<div className='header'>
-									<div>Додати рядок</div>
+									<div>Add row</div>
 									<div
 										style={{
 											fontSize: '12px',
@@ -59,11 +32,12 @@ const AddTableRowDialog: FC<IAddTableRowDialogProps> = ({
 											fontWeight: 400,
 										}}
 									>
-										Введіть одне значення або проміжок значень через дефіс
+										Enter value (such as 1500) or a set of values (such as
+										1200-2200)
 									</div>
 								</div>
 								<div>
-									<div className='label'>Не виготовляється</div>
+									<div className='label'>Exceptions</div>
 									<input
 										type='text'
 										value={exception}
@@ -74,7 +48,7 @@ const AddTableRowDialog: FC<IAddTableRowDialogProps> = ({
 								</div>
 
 								<div>
-									<div className='label'>Рекомендована довжина</div>
+									<div className='label'>Recommended</div>
 									<input
 										value={recommended}
 										type='text'
@@ -85,7 +59,7 @@ const AddTableRowDialog: FC<IAddTableRowDialogProps> = ({
 								</div>
 
 								<div>
-									<div className='label'>Виготовляється</div>
+									<div className='label'>Made</div>
 									<input
 										type='text'
 										value={made}
@@ -95,13 +69,8 @@ const AddTableRowDialog: FC<IAddTableRowDialogProps> = ({
 									/>
 								</div>
 
-								<button
-									className='save'
-									onClick={e => {
-										// onCreateLength()
-									}}
-								>
-									Створити
+								<button className='save' disabled>
+									Create
 								</button>
 							</div>
 						</div>

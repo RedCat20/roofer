@@ -37,7 +37,7 @@ const EditedPanel = () => {
 						dispatch(setEditedMode(1))
 					}}
 				>
-					Побудова фігури
+					Figure building
 				</button>
 
 				<button
@@ -54,7 +54,7 @@ const EditedPanel = () => {
 						)
 					}
 				>
-					Пропорційна трансформація
+					Auto transformation
 				</button>
 
 				<button
@@ -69,7 +69,7 @@ const EditedPanel = () => {
 						dispatch(setEditedMode(3))
 					}}
 				>
-					Трансформація за точками
+					Transformation by points
 				</button>
 
 				<button
@@ -79,7 +79,7 @@ const EditedPanel = () => {
 					disabled={!selectedFigure}
 					onClick={buildButtonHandler.bind(this)}
 				>
-					Накладання блоків
+					Block covering
 				</button>
 			</div>
 		</div>

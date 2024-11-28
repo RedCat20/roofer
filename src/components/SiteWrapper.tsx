@@ -31,7 +31,7 @@ const SiteWrapper: FC = () => {
 						{width < 900 ? (
 							<DataError errorText='Потрібен прилад з більшою шириною' />
 						) : !error ? (
-							<Routers defaultDictionaries={dictionaries} />
+							<Routers />
 						) : (
 							<DataError />
 						)}

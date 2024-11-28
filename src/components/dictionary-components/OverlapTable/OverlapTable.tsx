@@ -5,7 +5,6 @@ import styles from './OverlapTable.module.scss'
 import { useLocation } from 'react-router-dom'
 
 import plusImg from '../../../images/plus.png'
-import { AppContext } from '../../../context/AppContext'
 import AddTableRowDialog from '../Dialogs/AddTableRowDialog'
 import AddOverlapRowDialog from '../Dialogs/AddOverlapRowDialog'
 import { useSelector, useDispatch } from 'react-redux'
@@ -17,7 +16,6 @@ interface ICategoryParams {
 }
 
 const OverlapTable: FC = () => {
-	const appContext = useContext(AppContext)
 	let location = useLocation()
 	const { dictionaries: categories } = useSelector(
 		(state: RootState) => state.dictionaries
@@ -28,7 +26,6 @@ const OverlapTable: FC = () => {
 	useEffect(() => {
 		if (location) {
 			let urlCategoryId = location.pathname.split('=')[1]
-			// let result = appContext.state.dictionary.find(item => item.id.toString() === urlCategoryId);
 			let result = categories.find(item => item.id.toString() === urlCategoryId)
 
 			setActiveCategory(result)
@@ -136,15 +133,15 @@ const OverlapTable: FC = () => {
 
 	return (
 		<div clasName={styles.container}>
-			<h1>Нахлест</h1>
+			<h1>Overlap</h1>
 			<div>
 				<table>
 					<thead>
 						<tr>
-							<th>Загальна ширина</th>
-							<th>Корисна ширина</th>
-							<th>Нахлест</th>
-							<th>Дії</th>
+							<th>Main width</th>
+							<th>Useful width</th>
+							<th>Overlap</th>
+							<th>Actions</th>
 							<th>
 								<div
 									onClick={e => setOverlapLength(true)}

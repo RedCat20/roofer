@@ -1,5 +1,4 @@
 import { FC, useContext } from 'react'
-import { AppContext } from '../../../../../context/AppContext'
 import { FIGURES } from '../../../../../enums/figure.enum'
 import styles from './FiguresInputs.module.scss'
 import { useSelector, useDispatch } from 'react-redux'
@@ -9,14 +8,16 @@ import {
 } from '../../../../../store/figureParamsSlice'
 
 import { setNewSquareParamsBySides } from '../../../../../helpers/set.new.square.params'
-import { setNewRectangleParamsBySides } from '../../../../../helpers/set.new.rectangle.params'
+import {
+	setNewRectangleParamsBySides,
+	setNewTriangleParamsBySides,
+} from '../../../../../helpers/set.new.rectangle.params'
 
 interface Props {}
 
 export const FiguresInputs: FC<Props> = ({}) => {
 	const dispatch = useDispatch()
 
-	const appContext = useContext(AppContext)
 	const { figureSides } = useSelector((state: any) => state.figureParams)
 	const { editedMode, selectedFigure } = useSelector(
 		(state: any) => state.settings
@@ -59,6 +60,25 @@ export const FiguresInputs: FC<Props> = ({}) => {
 				}
 				break
 			}
+			case FIGURES.Triangular: {
+				{
+					const newFigureASide = e.target.value
+					setNewTriangleParamsBySides({
+						newData: {
+							sideA: newFigureASide,
+							sideB: figureSides.figureBSide,
+							sideC: figureSides.figureCSide,
+						},
+						storeData: {
+							dispatch,
+							figureSides,
+							changeFigureSides,
+							changeFigurePoints,
+						},
+					})
+				}
+				break
+			}
 		}
 	}
 
@@ -83,12 +103,6 @@ export const FiguresInputs: FC<Props> = ({}) => {
 				break
 			}
 		}
-
-		// dispatch(
-		// 	changeFigureSides({
-		// 		figureBSide: e.target.value,
-		// 	})
-		// )
 	}
 
 	function onChangeFigureCSideHandler(e: any) {
@@ -177,14 +191,7 @@ export const FiguresInputs: FC<Props> = ({}) => {
 					type='number'
 					value={figureSides.figureDSide}
 					onChange={onChangeFigureDSideHandler.bind(this)}
-					disabled={
-						appContext.state.selectedFigure === FIGURES.None ||
-						appContext.state.selectedFigure === FIGURES.Square ||
-						appContext.state.selectedFigure === FIGURES.Rectangle ||
-						appContext.state.selectedFigure === FIGURES.Triangular ||
-						appContext.state.selectedFigure === FIGURES.Trapezoid ||
-						appContext.state.selectedFigure === FIGURES.Polygon
-					}
+					disabled={true}
 				/>
 				<span>m</span>
 			</div>

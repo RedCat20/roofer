@@ -2,7 +2,6 @@
 
 import React, { FC, useContext, useState, useEffect } from 'react'
 import { scalesConfig } from '../../../data'
-import { AppContext } from '../../../context/AppContext'
 import { useSelector, useDispatch } from 'react-redux'
 import styles from './AddPointsDialog.module.scss'
 import { FIGURES } from '../../../enums/figure.enum'
@@ -27,7 +26,6 @@ const AddPointsDialog: FC<IAddTableRowDialogProps> = ({
 	setPointsCallback,
 	onCloseCallback,
 }) => {
-	const appContext = useContext(AppContext)
 	const [newPointsArr, setNewPointsArr] = useState<object[]>([])
 
 	const gridConfig = useGridConfig()
@@ -51,44 +49,11 @@ const AddPointsDialog: FC<IAddTableRowDialogProps> = ({
 		const axis = id.split('-')?.[0]
 		const point = id.split('-')?.[1]
 
-		// for (let i = 0; i < 4; i++) {
-		// 	if (
-		// 		!document.querySelector(`#x-${i}`) ||
-		// 		(document.querySelector(`#x-${i}`) &&
-		// 			document.querySelector(`#x-${i}`)?.value === '')
-		// 	)
-		// 		continue
-
-		// let convertedX = +(
-		// 	+document.querySelector(`#x-${i}`).value *
-		// 		scalesConfig[`${selectedScale}`] +
-		// 	appContext.state.gridConfig.cellSize
-		// ).toFixed(2)
-
-		// let convertedY = +(
-		// 	-appContext.state.gridConfig.height * scalesConfig[`${selectedScale}`] +
-		// 	appContext.state.gridConfig.cellSize +
-		// 	+document.querySelector(`#y-${i}`).value *
-		// 		scalesConfig[`${selectedScale}`]
-		// ).toFixed(2)
-
-		// let coorX = +(+document.querySelector(`#x-${i}`).value).toFixed(2)
-
-		// let coordY = +(+document.querySelector(`#y-${i}`).value).toFixed(2)
-
-		// arr.push([coorX, coordY])
-		console.log('Debug')
-
 		if (point < arr.length) {
 			if (axis === 'x') arr[point] = [value, figurePoints[point][1]]
 			else if (axis === 'y') arr[point] = [figurePoints[point][0], value]
 			dispatch(changeCustomPoints([...arr]))
-		} else {
-			// if (axis === 'x') arr.push([value, 0])
-			// else if (axis === 'y') arr.push([0, value])
 		}
-
-		// setPointsCallback(arr)
 	}
 
 	let onCreatePolygonPoints = (e, item) => {
@@ -100,44 +65,11 @@ const AddPointsDialog: FC<IAddTableRowDialogProps> = ({
 		const axis = id.split('-')?.[0]
 		const point = id.split('-')?.[1]
 
-		// for (let i = 0; i < 4; i++) {
-		// 	if (
-		// 		!document.querySelector(`#x-${i}`) ||
-		// 		(document.querySelector(`#x-${i}`) &&
-		// 			document.querySelector(`#x-${i}`)?.value === '')
-		// 	)
-		// 		continue
-
-		// let convertedX = +(
-		// 	+document.querySelector(`#x-${i}`).value *
-		// 		scalesConfig[`${selectedScale}`] +
-		// 	appContext.state.gridConfig.cellSize
-		// ).toFixed(2)
-
-		// let convertedY = +(
-		// 	-appContext.state.gridConfig.height * scalesConfig[`${selectedScale}`] +
-		// 	appContext.state.gridConfig.cellSize +
-		// 	+document.querySelector(`#y-${i}`).value *
-		// 		scalesConfig[`${selectedScale}`]
-		// ).toFixed(2)
-
-		// let coorX = +(+document.querySelector(`#x-${i}`).value).toFixed(2)
-
-		// let coordY = +(+document.querySelector(`#y-${i}`).value).toFixed(2)
-
-		// arr.push([coorX, coordY])
-		console.log('Debug')
-
 		if (point < arr.length) {
 			if (axis === 'x') arr[point] = [value, item[1]]
 			else if (axis === 'y') arr[point] = [item[0], value]
 			dispatch(changeCustomPoints([...arr]))
-		} else {
-			// if (axis === 'x') arr.push([value, 0])
-			// else if (axis === 'y') arr.push([0, value])
 		}
-
-		// setPointsCallback(arr)
 	}
 
 	const setPointsHandler = e => {

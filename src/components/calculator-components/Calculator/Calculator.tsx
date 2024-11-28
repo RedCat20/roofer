@@ -12,7 +12,6 @@ import {
 	changeFigureSides,
 } from '../../../store/figureParamsSlice'
 
-import RoofStage from '../roof-components/RoofStage/RoofStage'
 import StageDev from '../roof-dev/StageDev/StageDev'
 
 import SidePanel from '../page-components/SidePanel/SidePanel'
